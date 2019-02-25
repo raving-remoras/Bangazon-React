@@ -1,17 +1,20 @@
-import React, { Component } from 'react';
-import NavBar from './NavBar.js'
-import AppRouter from './AppRouter.js'
+import React, { Component } from "react"
+import NavBar from "./NavBar.js"
+import AppRouter from "./AppRouter.js"
+
+import { Container } from "reactstrap"
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <NavBar/>
-        <AppRouter />
-
-      </div>
-    );
+      <>
+        <NavBar />
+        <Container>
+          <AppRouter />
+        </Container>
+      </>
+    )
   }
 }
 
-export default App;
+export default App
