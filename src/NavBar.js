@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { NavLink as RouterNavLink } from "react-router-dom"
 import {
   Nav,
   Navbar,
@@ -9,11 +10,14 @@ import {
 class App extends Component {
   render() {
     return (
-      <Navbar>
-        <NavbarBrand href="/">Bangazon API</NavbarBrand>
+      <Navbar color="primary" expand="xs">
+        <NavbarBrand className="text-white" href="/">Bangazon API</NavbarBrand>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink href="/components/">Components</NavLink>
+            <NavLink className="text-white" tag={RouterNavLink} to="/hr">HR</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="text-white" tag={RouterNavLink} to="/ecommerce">E-Commerce</NavLink>
           </NavItem>
         </Nav>
       </Navbar>
