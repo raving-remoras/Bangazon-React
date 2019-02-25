@@ -7,6 +7,43 @@ class APICalls {
       .then(data => data.json())
   }
 
+  getAllFromCategory(category) {
+    return fetch(`${apiURL}${category}/`)
+      .then(data => data.json())
+  }
+
+  getOneFromCategory(category, id) {
+    return fetch(`${apiURL}${category}/${id}/`)
+      .then(data => data.json())
+  }
+
+  getAllFromCategoryWithQuery(category, queryName, paramiter) {
+    return fetch(`${apiURL}${category}/?${queryName}=${paramiter}/`)
+      .then(data => data.json())
+
+  }
+
+  post(category, obj){
+    return fetch(`${apiURL}${category}/`,{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(obj)
+    })
+      .then(data => data.json())
+  }
+
+  update(category, obj, id){
+    return fetch(`${apiURL}${category}/${id}/`,{
+      method: "PUT",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(obj)
+    })
+      .then(data => data.json())
+  }
 }
 
 export default new APICalls()
