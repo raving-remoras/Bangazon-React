@@ -12,6 +12,7 @@ import {
 } from "reactstrap"
 
 import Employees from "./employees/employees"
+import Computers from "./computers/computers"
 
 class HrRouter extends Component {
   state = {  }
@@ -23,12 +24,16 @@ class HrRouter extends Component {
             <NavItem>
               <NavLink tag={RouterNavLink} to="/hr/employees">Employees</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={RouterNavLink} to="/hr/computers">Computers</NavLink>
+            </NavItem>
           </Nav>
         </Navbar>
 
         {/* Sub Router for all HR paths */}
         <Switch>
           <Route path="/hr/employees" render={(props) => <Employees {...props} />} />
+          <Route path="/hr/computers" render={(props) => <Computers {...props} />} />
         </Switch>
       </>
     )
