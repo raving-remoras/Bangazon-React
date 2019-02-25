@@ -1,0 +1,12 @@
+const apiURL = "http://127.0.0.1:8000/api/v1/"
+
+class APICalls {
+
+  getAll() {
+    return fetch(apiURL)
+      .then(data => data.json())
+  }
+
+}
+
+export default new APICalls()
