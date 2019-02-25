@@ -2,9 +2,12 @@ import React, { Component } from "react"
 import { ListGroup, ListGroupItem, Row, Col} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
 import ComputerItem from "./computerItem"
+import ComputerForm from "./computerForm"
 
 class Computers extends Component {
   state = {
+    add: true,
+    edit: ""
   }
 
   getComputers = () => {
@@ -22,6 +25,11 @@ class Computers extends Component {
     return (
       <>
         <h1>Computers</h1>
+      {
+        (this.state.add === true)
+          ? <ComputerForm/>
+          : null
+      }
       {
         (this.state.computers)
           ? <ListGroup>
