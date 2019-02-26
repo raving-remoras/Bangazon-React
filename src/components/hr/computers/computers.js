@@ -1,12 +1,12 @@
 import React, { Component } from "react"
-import { ListGroup, ListGroupItem, Row, Col} from "reactstrap"
+import { Button, ListGroup, ListGroupItem, Row, Col} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
 import ComputerItem from "./computerItem"
 import ComputerForm from "./computerForm"
 
 class Computers extends Component {
   state = {
-    add: true,
+    add: false,
     edit: ""
   }
 
@@ -15,6 +15,10 @@ class Computers extends Component {
       .then((computers) => {
         this.setState({computers: computers})
       })
+  }
+
+  toggleAdd = () => {
+    this.setState({add: !this.state.add})
   }
 
   componentDidMount() {
@@ -27,9 +31,18 @@ class Computers extends Component {
         <h1>Computers</h1>
       {
         (this.state.add === true)
-          ? <ComputerForm/>
+          ? <ComputerForm
+            toggleAdd={this.toggleAdd}
+            refresh={this.getComputers}
+          />
           : null
       }
+        {
+          (this.state.add === false)
+            ? <Button color="primary" onClick={() => this.toggleAdd()}>Add Computer</Button>
+            : <Button color="danger" onClick={() => this.toggleAdd()}>Cancel</Button>
+        }
+
       {
         (this.state.computers)
           ? <ListGroup>

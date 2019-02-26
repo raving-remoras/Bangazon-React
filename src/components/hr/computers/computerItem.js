@@ -7,7 +7,7 @@ import PropTypes from "prop-types"
 class ComputerItem extends Component {
   render() {
     return (
-      <ListGroupItem tag="a" href="#" action>
+      <ListGroupItem tag="a" href={`/computers/${this.props.computer.id}`} action>
         <Row>
           <Col xs={4} className=" d-flex align-items-center text-center">
             {this.props.computer.make}
