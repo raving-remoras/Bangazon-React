@@ -22,6 +22,12 @@ class APICalls {
       .then(data => data.json())
   }
 
+  getOneFromCategoryWithQuery(category, id, queryName, parameter) {
+    return fetch(`${apiURL}${category}/${id}/?${queryName}=${parameter}`)
+      .then(data => data.json())
+
+  }
+
   getAllFromCategoryWithQuery(category, queryName, parameter) {
     return fetch(`${apiURL}${category}/?${queryName}=${parameter}/`)
       .then(data => data.json())

@@ -16,6 +16,7 @@ import Products from "./products/products"
 import ProductTypes from "./product_types/product_types"
 import ProductDetail from "./products/product_detail/product_detail"
 import APICalls from "../../modules/APICalls"
+import ProductForm from "./products/product_form/product_form";
 
 class EcommerceRouter extends Component {
   state = {  }
@@ -46,6 +47,8 @@ class EcommerceRouter extends Component {
           <Route exact path="/ecommerce/customers" render={(props) => <Customers {...props} />} />
           <Route exact path="/ecommerce/products" render={(props)=> <Products {...props} products={this.state.products}/>}/>
           <Route exact path="/ecommerce/products/:productId(\d+)" render={(props)=> <ProductDetail {...props}/>}/>
+          <Route exact path="/ecommerce/products/add" render={(props)=> <ProductForm {...props}/>}/>
+          <Route exact path="/ecommerce/products/edit" render={(props)=> <ProductForm {...props}/>}/>
           <Route exact path="/ecommerce/producttypes" render={(props) => <ProductTypes {...props}/>}/>
         </Switch>
       </>

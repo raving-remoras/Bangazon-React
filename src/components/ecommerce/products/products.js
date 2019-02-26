@@ -54,7 +54,7 @@ class Products extends Component {
             <h1>Products</h1>
           </Col>
           <Col md="3" className="ml-auto align-right">
-            <Button className="ml-2">Add New Product</Button>
+            <Button tag="a" href={"/ecommerce/products/add"} className="ml-2">Add New Product</Button>
           </Col>
         </Row>
         {this.productList(this.props.products)}

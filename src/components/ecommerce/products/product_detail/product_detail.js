@@ -11,13 +11,15 @@ class ProductDetail extends Component {
   }
 
   refreshData = () =>{
-    APICalls.getOneFromCategory("productsexpand", this.props.match.params.productId)
+    APICalls.getOneFromCategoryWithQuery("products", this.props.match.params.productId, "include", "seller")
       .then(product_detail => {
         this.setState({ product_detail })
         return APICalls.getOneFromCategoryURL(product_detail.product_type)
       })
       .then(product_type => {this.setState({"product_type":product_type})})
   }
+
+  // TODO: Link button to product form and pass in product details, have it render in place
 
   productDetail = (product, product_type) => {
     return(
@@ -28,7 +30,7 @@ class ProductDetail extends Component {
             <h1>{product.title}</h1>
           </Col>
           <Col md="3" className="ml-auto align-right">
-            <Button>Edit Product Details</Button>
+            <Button tag="a" href={"/ecommerce/products/edit"}>Edit Product Details</Button>
           </Col>
         </Row>
         <ListGroup>
@@ -65,7 +67,6 @@ class ProductDetail extends Component {
   }
 
 
-  // TODO: Link button to product form and pass in product details, have it render in place
 
   render() {
     return (
