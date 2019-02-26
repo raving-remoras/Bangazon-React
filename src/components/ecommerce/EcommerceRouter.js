@@ -13,7 +13,7 @@ import {
 
 import Customers from "./customers/customers"
 
-class HrRouter extends Component {
+class EcommerceRouter extends Component {
   state = {  }
   render() {
     return (
@@ -35,4 +35,4 @@ class HrRouter extends Component {
   }
 }
 
-export default HrRouter
+export default EcommerceRouter
