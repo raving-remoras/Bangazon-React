@@ -1,9 +1,11 @@
 import React, { Component } from "react"
-import { Container} from "reactstrap"
+import { Container, Button} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
+import ComputerForm from "./computerForm"
 class ComputerDetail extends Component {
   state = {
-    isLoaded: false
+    isLoaded: false,
+    edit: false
   }
 
   getComputer = () => {
@@ -14,6 +16,12 @@ class ComputerDetail extends Component {
 
   }
 
+  toggleEdit = () => {
+    this.setState({edit: !this.state.edit})
+
+
+  }
+
   componentDidMount(){
     this.getComputer()
   }
@@ -21,6 +29,20 @@ class ComputerDetail extends Component {
   render() {
     return(
       <>
+        {
+          (this.state.edit === true)
+            ? <ComputerForm
+              computer={this.state.computer}
+              toggle={this.toggleEdit}
+              refresh={this.getComputer}
+            />
+            : null
+        }
+        {
+          (this.state.edit === false)
+            ? <Button color="primary" onClick={() => this.toggleEdit()}>Edit Computer</Button>
+            : <Button color="danger" onClick={() => this.toggleEdit()}>Cancel</Button>
+        }
         {
           (this.state.isLoaded == true)
             ?
@@ -33,6 +55,7 @@ class ComputerDetail extends Component {
             </Container>
             : null
         }
+
       </>
     )
   }

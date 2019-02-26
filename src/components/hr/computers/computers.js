@@ -31,7 +31,7 @@ class Computers extends Component {
       {
         (this.state.add === true)
           ? <ComputerForm
-            toggleAdd={this.toggleAdd}
+            toggle={this.toggleAdd}
             refresh={this.getComputers}
           />
           : null
