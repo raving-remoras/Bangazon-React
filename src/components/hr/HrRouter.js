@@ -13,7 +13,7 @@ import {
 
 import Employees from "./employees/employees"
 import Computers from "./computers/computers"
-import ComputerForm from "./computers/computerForm"
+import ComputerDetail from "./computers/computerDetail"
 
 class HrRouter extends Component {
   state = {  }
@@ -35,8 +35,8 @@ class HrRouter extends Component {
         <Switch>
           <Route path="/hr/employees" render={(props) => <Employees {...props} />} />
           <Route exact path="/hr/computers" render={(props) => <Computers {...props} />} />
-          <Route path="/computers/:compId(\d+)" render={(props) => <ComputerForm {...props}/>}
-            />
+          <Route path="/hr/computers/:compId(\d+)" render={(props) => <ComputerDetail {...props}/>}
+          />
         </Switch>
       </>
     )

@@ -7,7 +7,6 @@ import ComputerForm from "./computerForm"
 class Computers extends Component {
   state = {
     add: false,
-    edit: ""
   }
 
   getComputers = () => {
