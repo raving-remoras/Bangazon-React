@@ -19,7 +19,6 @@ class ComputerForm extends Component {
     const stateToChange = {}
     stateToChange[e.target.id] = e.target.value
     this.setState(stateToChange)
-    console.log(stateToChange)
   }
 
   addComputer = () => {
