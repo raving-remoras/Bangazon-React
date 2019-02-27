@@ -14,7 +14,8 @@
   margin-bottom: 50px;
 }
 
-#computerList, #trainingList{
+#computerList, #trainingList, #futureTrainings {
   max-width: 70%;
-  margin: 0 auto
+  margin: 0 auto;
+  margin-bottom: 30px
 }

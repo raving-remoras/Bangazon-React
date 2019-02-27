@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Button, ListGroup, ListGroupItem, Row, Col, Container} from "reactstrap"
+import { Button, ListGroup, ListGroupItem, Row, Col, Container, Form, FormGroup, Label, Input} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
 import TrainingItem from "./trainingItem"
 import TrainingForm from "./trainingForm"
@@ -12,19 +12,35 @@ class Trainings extends Component {
   */
   state = {
     add: false,
+    completed: true
   }
+
 
   getTrainings = () => {
     //Method fetches all trainings, then sets state
-    APICalls.getAllFromCategory("trainings")
-      .then((trainings) => {
-        this.setState({trainings: trainings})
-      })
+    if (this.state.completed === true){
+      APICalls.getAllFromCategory("trainings")
+        .then((trainings) => {
+          this.setState({trainings: trainings})
+        })
+    } else {
+      APICalls.getAllFromCategoryWithQuery("trainings", "completed", "false")
+        .then((trainings) => {
+          this.setState({trainings: trainings})
+        })
+    }
   }
 
   toggleAdd = () => {
     //Method sets state according to whether add form should be visible
     this.setState({add: !this.state.add})
+  }
+
+  toggleFuture = () => {
+    this.setState({completed: !this.state.completed})
+      .then(() => {
+        this.getTrainings()
+      })
   }
 
   componentDidMount() {
@@ -52,6 +68,18 @@ class Trainings extends Component {
           />
           : null
       }
+        <Form id="futureTrainings">
+          <FormGroup check>
+            <Label check>
+              <Input type="checkbox"
+                onClick={(e) => {
+                  this.toggleFuture()
+                }}
+              />{" "}
+              Future Trainings Only
+            </Label>
+          </FormGroup>
+        </Form>
       {
         (this.state.trainings)
           ? <ListGroup id="trainingList">
