@@ -1,20 +1,20 @@
-#compDetail {
+#compDetail, #deptDetail {
   width: 30%;
   margin: 0 auto;
 }
 
-#compEdit, #compAdd {
+#compEdit, #compAdd, #deptEdit, #deptAdd {
   margin-top: 50px;
   margin-bottom: 50px
 }
 
-#compForm {
+#compForm, #deptForm {
   width: 60%;
   margin: 0 auto;
   margin-bottom: 50px;
 }
 
-#computerList{
+#computerList, #deptList{
   max-width: 70%;
   margin: 0 auto
 }
