@@ -13,6 +13,7 @@ import {
 
 import Customers from "./customers/customers"
 import CustomerDetail from "./customers/customerDetail"
+import NewCustomer from "./customers/newCustomer"
 
 class EcommerceRouter extends Component {
   state = {  }
@@ -29,7 +30,8 @@ class EcommerceRouter extends Component {
 
         {/* Sub Router for all ecommerce paths */}
         <Switch>
-          <Route exact path="/ecommerce/customers" render={(props) => <Customers {...props} />} />
+          <Route exact path="/ecommerce/customers" render={props => <Customers {...props} />} />
+          <Route exact path="/ecommerce/customers/new" render={props => <NewCustomer {...props} />} />
           <Route
             path="/ecommerce/customers/:customerId(\d+)"
             render={props => {
