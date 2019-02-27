@@ -1,10 +1,21 @@
 import React, { Component } from "react"
-import {Container, Button, Row, Col, ListGroup, ListGroupItem} from "reactstrap"
+import {
+  Container,
+  Button,
+  Row,
+  Col,
+  ListGroup,
+  ListGroupItem
+} from "reactstrap"
 import APICalls from "../../../../modules/APICalls"
 import PropTypes from "prop-types"
+import ProductForm from "../product_form/product_form"
 
 class ProductDetail extends Component {
-  state = {  }
+  state = {
+    isLoaded: false,
+    edit: false
+  }
 
   componentDidMount=()=>{
     this.refreshData()
@@ -16,10 +27,12 @@ class ProductDetail extends Component {
         this.setState({ product_detail })
         return APICalls.getOneFromCategoryURL(product_detail.product_type)
       })
-      .then(product_type => {this.setState({"product_type":product_type})})
+      .then(product_type => {this.setState({product_type, isLoaded: true })})
   }
 
-  // TODO: Link button to product form and pass in product details, have it render in place
+  toggleEdit = () => {
+    this.setState({ edit: !this.state.edit })
+  }
 
   productDetail = (product, product_type) => {
     return(
@@ -28,9 +41,6 @@ class ProductDetail extends Component {
         <Row>
           <Col className="mb-5">
             <h1>{product.title}</h1>
-          </Col>
-          <Col md="3" className="ml-auto align-right">
-            <Button tag="a" href={"/ecommerce/products/edit"}>Edit Product Details</Button>
           </Col>
         </Row>
         <ListGroup>
@@ -49,7 +59,7 @@ class ProductDetail extends Component {
             </Row>
             <Row>
               <Col>Price:</Col>
-              <Col>{product.price}</Col>
+              <Col>${product.price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}</Col>
             </Row>
             <Row>
               <Col>Quantity:</Col>
@@ -66,12 +76,29 @@ class ProductDetail extends Component {
     )
   }
 
-
-
   render() {
     return (
       <Container>
-        {this.productDetail(this.state.product_detail, this.state.product_type)}
+        {
+          (this.state.edit === true)
+            ? <ProductForm
+              product={this.state.product_detail}
+              product_type={this.state.product_type}
+              toggle={this.toggleEdit}
+              refresh={this.refreshData}
+            />
+            : null
+        }
+        {
+          (this.state.edit === false )
+            ?<Button color="primary" onClick={()=> this.toggleEdit()}>Edit Product</Button>
+            :<Button color="danger" onClick={()=> this.toggleEdit()}>Cancel</Button>
+        }
+        {
+          (this.state.isLoaded === true)
+            ? this.productDetail(this.state.product_detail, this.state.product_type)
+            : null
+        }
       </Container>
 
     )
@@ -81,5 +108,5 @@ class ProductDetail extends Component {
 export default ProductDetail
 
 ProductDetail.propTypes = {
-  products: PropTypes.object.isRequired
+  match: PropTypes.object
 }

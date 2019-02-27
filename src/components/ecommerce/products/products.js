@@ -1,20 +1,31 @@
 import React, { Component } from "react"
-import { Container, ListGroup, ListGroupItem, Button, Row, Col } from "reactstrap"
-import PropTypes from "prop-types"
-// import APICalls from "../../../modules/APICalls"
+import {
+  Container,
+  ListGroup,
+  ListGroupItem,
+  Button,
+  Row,
+  Col
+} from "reactstrap"
+import APICalls from "../../../modules/APICalls"
+import ProductForm from "./product_form/product_form"
 
 class Products extends Component {
-  state = {  }
+  state = {
+    add: false,
+  }
 
-  // componentDidMount = () => {
-  //   this.refreshData()
-  // }
+  componentDidMount = () => {
+    this.refreshData()
+  }
 
-  // refreshData = () => {
-  //   APICalls.getAllFromCategory("products").then(data => this.setState({ "products": data }))
-  // }
+  refreshData = () => {
+    APICalls.getAllFromCategory("products").then(products => this.setState({ products }))
+  }
 
-  // TODO: Update price formatting
+  toggleAdd = () => {
+    this.setState({ add: !this.state.add })
+  }
 
   productList = (products) => {
     return (
@@ -44,8 +55,6 @@ class Products extends Component {
     )
   }
 
-  // TODO: Link button to product form and have it render a new page
-
   render() {
     return (
       <Container>
@@ -53,19 +62,27 @@ class Products extends Component {
           <Col className="mb-5">
             <h1>Products</h1>
           </Col>
-          <Col md="3" className="ml-auto align-right">
-            <Button tag="a" href={"/ecommerce/products/add"} className="ml-2">Add New Product</Button>
-          </Col>
+          {
+            (this.state.add === true)
+              ? <ProductForm
+                toggle={this.toggleAdd}
+                refresh={this.refreshData}
+              />
+              : null
+          }
+          {
+            (this.state.add === false)
+              ? <Col md="3" className="ml-auto align-right">
+                <Button color="primary" className="ml-2" onClick={()=>this.toggleAdd()}>Add Product</Button></Col>
+              : <Col md="3" className="ml-auto align-right">
+                <Button color="danger" className="ml-2" onClick={()=>this.toggleAdd()}>Cancel</Button>
+              </Col>
+          }
         </Row>
-        {this.productList(this.props.products)}
+        {this.productList(this.state.products)}
       </Container>
     )
   }
 }
 
 export default Products
-
-
-Products.propTypes = {
-  products: PropTypes.array.isRequired
-}

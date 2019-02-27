@@ -23,6 +23,7 @@ class ProductForm extends Component {
         price: this.props.product.price,
         quantity: this.props.product.quantity,
         product_type: this.props.product_type.name,
+        product_type_url: this.props.product_type.url,
         seller: {
           first_name: this.props.product.seller.first_name,
           last_name: this.props.product.seller.last_name
@@ -34,10 +35,10 @@ class ProductForm extends Component {
   // function uses ids of form fields as keys, creates an object with input as value and sets state
   handleFieldChange = evt => {
     const stateToChange = {
-      seller: {}
     }
     if (evt.target.id === "seller"){
       let full_name = evt.target.value.split(" ")
+      stateToChange["seller"] = {}
       stateToChange["seller"]["first_name"] = full_name[0]
       stateToChange["seller"].last_name = full_name[1]
     }
@@ -48,26 +49,44 @@ class ProductForm extends Component {
   }
 
   // function uses state to create a new product, and posts it to the database
-  // TODO: Figure out how to work with foreign keys for customer and producttype
-  // TODO: Come back and fix object to pull in all relevant data
-  // addProduct = () => {
-  //   let obj = {
+  addProduct = () => {
 
-  //   }
+    const product_type = this.state.product_types.find(pt => pt.name === this.state.product_type)
 
-  //   return APICalls.post("products", obj)
-  //     .then(()=> this.props.refresh())
-  // }
+    const seller = this.state.customers.find(c => c.first_name === this.state.seller.first_name && c.last_name === this.state.seller.last_name)
+
+    let obj = {
+      title: this.state.title,
+      description: this.state.description,
+      price: this.state.price,
+      quantity: this.state.quantity,
+      product_type: product_type.url,
+      seller: seller.url
+    }
+
+    return APICalls.post("products", obj)
+      .then(()=> this.props.refresh())
+  }
 
   // function uses state to create an updated object for an existing product and performs a PUT on the database
-  // updateProduct = () =>{
-  //   let obj = {
+  updateProduct = () =>{
 
-  //   }
+    const product_type = this.state.product_types.find(pt => pt.name === this.state.product_type)
 
-  //   return APICalls.update("products", obj, this.props.product.id)
-  //     .then(()=> this.props.refresh())
-  // }
+    const seller = this.state.customers.find(c => c.first_name === this.state.seller.first_name && c.last_name === this.state.seller.last_name)
+
+    let obj = {
+      title: this.state.title,
+      description: this.state.description,
+      price: this.state.price,
+      quantity: this.state.quantity,
+      product_type: product_type.url,
+      seller: seller.url
+    }
+
+    return APICalls.update("products", obj, this.props.product.id)
+      .then(()=> this.props.refresh())
+  }
 
 
   refreshData = () => {
@@ -81,7 +100,7 @@ class ProductForm extends Component {
   productTypeDropDown = (productTypes)=>{
     return (
       productTypes
-        ? <Input type="select" name="productTypeSelect" id="productType" value={this.state.product_type}>
+        ? <Input type="select" name="productTypeSelect" id="product_type" value={this.state.product_type}>
           <option> {null} </option>
           {
             productTypes.map(productType => {
@@ -168,7 +187,6 @@ ProductForm.propTypes = {
   product_type: PropTypes.object
 }
 
-// * [ ]  On the new product form, a user has the option to select from pre-existing customers (sellers) and product types
 // * [ ]   Once the user selects a customer or product type, they have the affordance to edit that entity (see edit form for customer #39 and product type #27 )
 // * [ ]   A user can also add a new customer or  product type from the add order page (see add form for customer #38 and product type #26 )
-// * [ ]   The user has the option to "save and add another" product-- which performs a put then routes to a new product add form, "save and continue editing", or "save"-- which routes back to product list
+// * [ ]   The user has the option to "save"-- which routes back to product list
