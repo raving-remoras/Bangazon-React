@@ -33,7 +33,7 @@ class Products extends Component {
                 <ListGroupItem tag="a" href={`products/${product.id}`} key={product.url} action>
                   <Row>
                     <Col>{product.title}</Col>
-                    <Col>{product.price}</Col>
+                    <Col>${product.price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}</Col>
                     <Col>{product.quantity}</Col>
                   </Row>
                 </ListGroupItem>
