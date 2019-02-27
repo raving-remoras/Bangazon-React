@@ -1,20 +1,23 @@
-#compDetail, #trainingDetail {
+#compDetail, #trainingDetail, #deptDetail {
   width: 30%;
   margin: 0 auto;
 }
 
-#compEdit, #compAdd, #trainingEdit, #trainingAdd  {
+
+#compEdit, #compAdd, #trainingEdit, #trainingAdd, #deptEdit, #deptAdd  {
+
   margin-top: 50px;
   margin-bottom: 50px
 }
 
-#compForm, #trainingForm {
+
+#compForm, #trainingForm, #deptForm {
   width: 60%;
   margin: 0 auto;
   margin-bottom: 50px;
 }
 
-#computerList, #trainingList, #futureTrainings {
+#computerList, #trainingList, #futureTrainings, #deptList {
   max-width: 70%;
   margin: 0 auto;
   margin-bottom: 30px
