@@ -12,12 +12,9 @@ import {
 } from "reactstrap"
 
 import Employees from "./employees/employees"
-<<<<<<< HEAD
 import EmployeeDetailPage from "./employees/EmployeeDetailPage"
-=======
 import Computers from "./computers/computers"
 import ComputerDetail from "./computers/computerDetail"
->>>>>>> master
 
 class HrRouter extends Component {
   state = {}
