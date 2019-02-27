@@ -34,6 +34,8 @@ class HrRouter extends Component {
             </NavItem>
             <NavItem>
               <NavLink tag={RouterNavLink} to="/hr/trainings">Trainings</NavLink>
+            </NavItem>
+            <NavItem>
               <NavLink tag={RouterNavLink} to="/hr/departments">Departments</NavLink>
             </NavItem>
           </Nav>
