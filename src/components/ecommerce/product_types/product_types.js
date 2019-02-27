@@ -20,7 +20,7 @@ class ProductTypes extends Component {
   }
 
   refreshData = () => {
-    APICalls.getAllFromCategory("producttypes").then(data => this.setState({ "productTypes": data }))
+    APICalls.getAllFromCategory("producttypes").then(productTypes => this.setState({ productTypes }))
   }
 
   toggleAdd = () => {

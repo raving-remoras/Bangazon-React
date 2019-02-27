@@ -1,5 +1,10 @@
 import React, { Component } from "react"
-import {Container, Button, Row, Col} from "reactstrap"
+import {
+  Container,
+  Button,
+  Row,
+  Col
+} from "reactstrap"
 import APICalls from "../../../../modules/APICalls"
 import ProductTypeForm from "../product_type_form/product_type_form"
 import PropTypes from "prop-types"
@@ -55,7 +60,7 @@ class ProductTypeDetail extends Component {
             :<Button color="danger" onClick={()=> this.toggleEdit()}>Cancel</Button>
         }
         {
-          (this.state.isLoaded == true)
+          (this.state.isLoaded === true)
             ? this.productTypeDetail(this.state.product_type_detail)
             : null
         }
