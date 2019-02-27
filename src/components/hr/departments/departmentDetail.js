@@ -38,7 +38,7 @@ class DepartmentDetail extends Component {
   render() {
     return(
       <>
-        <Container className="text-center" id="deptEdit">
+        <Container className="text-center editButton">
           {
             (this.state.edit === false)
               ? <Button color="primary" onClick={() => this.toggleEdit()}>Edit department</Button>
@@ -57,7 +57,7 @@ class DepartmentDetail extends Component {
         {
           (this.state.isLoaded === true)
             ?
-            <dl className="row" id="deptDetail">
+            <dl className="row detailView">
               <dt className="col-sm-6">Name:</dt>
               <dd className="col-sm-6">{this.state.department.name}</dd>
               <dt className="col-sm-6">Budget:</dt>

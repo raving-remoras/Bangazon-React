@@ -60,7 +60,7 @@ class DepartmentForm extends Component {
   render() {
     return(
       <Form
-        id="deptForm"
+        className="form"
         onSubmit={(e) => {
           e.preventDefault()
           {
