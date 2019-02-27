@@ -1,9 +1,7 @@
 import React, { Component } from "react"
 import {
   Container,
-  Button,
-  Row,
-  Col
+  Button
 } from "reactstrap"
 import APICalls from "../../../../modules/APICalls"
 import ProductTypeForm from "../product_type_form/product_type_form"
@@ -31,20 +29,29 @@ class ProductTypeDetail extends Component {
   productTypeDetail = (product_type) => {
     return(
       product_type
-        ? <>
-        <Row>
-          <Col className="mb-5">
-            <h1>{product_type.name}</h1>
-          </Col>
-        </Row>
-        </>
+        ?<Container className="text-center">
+          <h1>{this.state.product_type_detail.name}</h1>
+        </Container>
         : null
+
     )
   }
 
   render() {
     return (
-      <Container>
+      <>
+        {
+          (this.state.isLoaded === true)
+            ? this.productTypeDetail(this.state.product_type_detail)
+            : null
+        }
+        <Container className="text-center editButton">
+          {
+            (this.state.edit === false )
+              ?<Button color="primary" onClick={()=> this.toggleEdit()}>Edit Product Type</Button>
+              :<Button color="danger" onClick={()=> this.toggleEdit()}>Cancel</Button>
+          }
+        </Container>
         {
           (this.state.edit === true)
             ? <ProductTypeForm
@@ -54,17 +61,7 @@ class ProductTypeDetail extends Component {
             />
             :null
         }
-        {
-          (this.state.edit === false )
-            ?<Button color="primary" onClick={()=> this.toggleEdit()}>Edit Product Type</Button>
-            :<Button color="danger" onClick={()=> this.toggleEdit()}>Cancel</Button>
-        }
-        {
-          (this.state.isLoaded === true)
-            ? this.productTypeDetail(this.state.product_type_detail)
-            : null
-        }
-      </Container>
+      </>
     )
   }
 }

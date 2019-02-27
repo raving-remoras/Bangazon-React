@@ -29,10 +29,10 @@ class ProductTypes extends Component {
 
   productTypeList = (productTypes) => {
     return(
-      <ListGroup>
+      <ListGroup className="listItems">
         <ListGroupItem color="info">
           <Row>
-            <Col><h6>Name</h6></Col>
+            <Col xs={4} className=" d-flex align-items-center text-center"><h6>Name</h6></Col>
           </Row>
         </ListGroupItem>
         {
@@ -41,7 +41,7 @@ class ProductTypes extends Component {
               return(
                 <ListGroupItem tag="a" href={`producttypes/${productType.id}`} key={productType.url} action>
                   <Row>
-                    <Col>{productType.name}</Col>
+                    <Col className=" d-flex align-items-center text-center">{productType.name}</Col>
                   </Row>
                 </ListGroupItem>
               )})
@@ -54,27 +54,27 @@ class ProductTypes extends Component {
 
   render() {
     return (
-      <Container>
-        <Row>
-          <Col className="mb-5">
-            <h1>Product Types</h1>
-          </Col>
-          {
-            (this.state.add === true)
-              ? <ProductTypeForm
-                toggle={this.toggleAdd}
-                refresh={this.refreshData}
-              />
-              : null
-          }
+      <>
+        <Container className="text-center">
+          <h1>Product Types</h1>
+        </Container>
+        <Container className="text-center addButton">
           {
             (this.state.add === false)
-              ? <Col md="3" className="ml-auto align-right"><Button color="primary" className="ml-2" onClick={() => this.toggleAdd()}>Add Product Type</Button></Col>
-              : <Col md="3" className="ml-auto align-right"><Button color="danger" class="ml-2" onClick={() => this.toggleAdd()}>Cancel</Button></Col>
+              ? <Button color="primary" className="ml-2" onClick={() => this.toggleAdd()}>Add Product Type</Button>
+              : <Button color="danger" class="ml-2" onClick={() => this.toggleAdd()}>Cancel</Button>
           }
-        </Row>
+        </Container>
+        {
+          (this.state.add === true)
+            ? <ProductTypeForm
+              toggle={this.toggleAdd}
+              refresh={this.refreshData}
+            />
+            : null
+        }
         {this.productTypeList(this.state.productTypes)}
-      </Container>
+      </>
     )
   }
 }
