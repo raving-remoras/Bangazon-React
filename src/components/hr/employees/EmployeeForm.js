@@ -1,8 +1,7 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap"
+import { Button, Form, FormGroup, Label, Input} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
-import moment from "moment"
 
 
 class EmployeeForm extends Component {
@@ -130,18 +129,22 @@ class EmployeeForm extends Component {
 
   render() {
     return (
-      <Form>
+      <Form onSubmit={(e) => {
+        e.preventDefault()
+        this.post()
+        this.props.refresh()
+      }}>
         <FormGroup>
           <Label>First Name</Label>
-          <Input type="text" onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.employeeFirstName} id="employeeFirstName" />
+          <Input required type="text" onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.employeeFirstName} id="employeeFirstName" />
         </FormGroup>
         <FormGroup>
           <Label>Last Name</Label>
-          <Input type="text" onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.employeeLastName} id="employeeLastName" />
+          <Input required type="text" onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.employeeLastName} id="employeeLastName" />
         </FormGroup>
         <FormGroup>
           <Label>Start Date</Label>
-          <Input type="datetime-local" onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.employeeStartDate} id="employeeStartDate"></Input>
+          <Input required type="datetime-local" onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.employeeStartDate} id="employeeStartDate"></Input>
         </FormGroup>
         <FormGroup>
           <Label>End Date</Label>
@@ -149,7 +152,7 @@ class EmployeeForm extends Component {
         </FormGroup>
         <FormGroup>
           <Label>Department</Label>
-          <Input type="select" id="employeeDepartment" onChange={(e)=>this.handleFieldChange(e)}>
+          <Input required type="select" id="employeeDepartment" onChange={(e)=>this.handleFieldChange(e)}>
             {this.state.departmentOption}
             {this.state.departments.map(department => {
               return <option key={department.id} value={department.id}>{department.name}</option>
@@ -173,10 +176,7 @@ class EmployeeForm extends Component {
           </Input>
         </FormGroup>
         <Button onClick={() => this.props.formToggle()}>Back</Button>
-        <Button onClick={() => {
-          this.post()
-          this.props.refresh()
-        }}>Save</Button>
+        <Button type="submit">Save</Button>
 
       </Form>
     )
