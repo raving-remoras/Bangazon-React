@@ -23,10 +23,10 @@ class APICalls {
       queryName.forEach((name, i) => {
         fullQuery += `${name}=${parameter[i]}&`
       })
-      return fetch(`${apiURL}${category}/?${fullQuery}/`)
+      return fetch(`${apiURL}${category}/?${fullQuery}`)
         .then(data => data.json())
     }
-    return fetch(`${apiURL}${category}/?${queryName}=${parameter}/`)
+    return fetch(`${apiURL}${category}/?${queryName}=${parameter}`)
       .then(data => data.json())
   }
 
