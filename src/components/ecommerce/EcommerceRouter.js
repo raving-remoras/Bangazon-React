@@ -15,15 +15,10 @@ import Customers from "./customers/customers"
 import Products from "./products/products"
 import ProductTypes from "./product_types/product_types"
 import ProductDetail from "./products/product_detail/product_detail"
-import APICalls from "../../modules/APICalls"
-import ProductForm from "./products/product_form/product_form";
+import ProductTypeDetail from "./product_types/product_type_detail/product_type_detail"
 
 class EcommerceRouter extends Component {
   state = {  }
-
-  componentDidMount = ()=>{
-    APICalls.getAllFromCategory("products").then(data => this.setState({ "products" : data }))
-  }
 
   render() {
     return (
@@ -45,11 +40,10 @@ class EcommerceRouter extends Component {
         {/* Sub Router for all ecommerce paths */}
         <Switch>
           <Route exact path="/ecommerce/customers" render={(props) => <Customers {...props} />} />
-          <Route exact path="/ecommerce/products" render={(props)=> <Products {...props} products={this.state.products}/>}/>
+          <Route exact path="/ecommerce/products" render={(props)=> <Products {...props} />}/>
           <Route exact path="/ecommerce/products/:productId(\d+)" render={(props)=> <ProductDetail {...props}/>}/>
-          <Route exact path="/ecommerce/products/add" render={(props)=> <ProductForm {...props}/>}/>
-          <Route exact path="/ecommerce/products/edit" render={(props)=> <ProductForm {...props}/>}/>
           <Route exact path="/ecommerce/producttypes" render={(props) => <ProductTypes {...props}/>}/>
+          <Route exact path="/ecommerce/producttypes/:productTypeId(\d+)" render={(props)=> <ProductTypeDetail {...props}/>}/>
         </Switch>
       </>
     )
