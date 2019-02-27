@@ -1,0 +1,20 @@
+#compDetail {
+  width: 30%;
+  margin: 0 auto;
+}
+
+#compEdit, #compAdd {
+  margin-top: 50px;
+  margin-bottom: 50px
+}
+
+#compForm {
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+#computerList{
+  max-width: 70%;
+  margin: 0 auto
+}
