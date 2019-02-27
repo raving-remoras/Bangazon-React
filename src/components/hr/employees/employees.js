@@ -29,7 +29,6 @@ class Employees extends Component {
   }
 
   refresh = () => {
-    console.log("refresh")
     APICalls.getAllFromCategory("employees")
       .then(employees => this.setState({
         employees: employees,
