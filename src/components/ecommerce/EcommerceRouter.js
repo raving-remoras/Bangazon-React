@@ -12,6 +12,7 @@ import {
 } from "reactstrap"
 
 import Customers from "./customers/customers"
+import CustomerDetail from "./customers/customerDetail"
 
 class EcommerceRouter extends Component {
   state = {  }
@@ -28,7 +29,12 @@ class EcommerceRouter extends Component {
 
         {/* Sub Router for all ecommerce paths */}
         <Switch>
-          <Route path="/ecommerce/customers" render={(props) => <Customers {...props} />} />
+          <Route exact path="/ecommerce/customers" render={(props) => <Customers {...props} />} />
+          <Route
+            path="/ecommerce/customers/:customerId(\d+)"
+            render={props => {
+              return <CustomerDetail {...props} />
+            }} />
         </Switch>
       </>
     )
