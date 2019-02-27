@@ -101,8 +101,8 @@ class ComputerForm extends Component {
           <Input type="datetime-local" name="purchase_date" id="purchase_date" required onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.purchase_date} />
         </FormGroup>
         <FormGroup>
-          <Label for="date">Retire Date</Label>
-          <Input type="datetime-local" name="date" id="date" onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.retire_date} />
+          <Label for="retire_date">Retire Date</Label>
+          <Input type="datetime-local" name="retire_date" id="retire_date" onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.retire_date} />
         </FormGroup>
 
         <Button color="primary" type="submit">Save</Button>
