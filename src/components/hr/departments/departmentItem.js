@@ -18,7 +18,7 @@ class DepartmentItem extends Component {
 
           </Col>
           <Col xs={6} className=" d-flex align-items-center text-center">
-            {this.props.department.budget}
+            ${this.props.department.budget.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}
 
           </Col>
         </Row>

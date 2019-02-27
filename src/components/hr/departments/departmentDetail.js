@@ -61,7 +61,7 @@ class DepartmentDetail extends Component {
               <dt className="col-sm-6">Name:</dt>
               <dd className="col-sm-6">{this.state.department.name}</dd>
               <dt className="col-sm-6">Budget:</dt>
-              <dd className="col-sm-6">{this.state.department.budget}</dd>
+              <dd className="col-sm-6">${this.state.department.budget.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}</dd>
             </dl>
             : null
         }
