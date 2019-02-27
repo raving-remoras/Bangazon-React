@@ -17,6 +17,17 @@ class APICalls {
       .then(data => data.json())
   }
 
+  getOneFromCategoryURL(url){
+    return fetch(`${url}`)
+      .then(data => data.json())
+  }
+
+  getOneFromCategoryWithQuery(category, id, queryName, parameter) {
+    return fetch(`${apiURL}${category}/${id}/?${queryName}=${parameter}`)
+      .then(data => data.json())
+
+  }
+
   getAllFromCategoryWithQuery(category, queryName, parameter) {
     if(Array.isArray(queryName) && Array.isArray(parameter)) {
       let fullQuery = ""
@@ -27,11 +38,6 @@ class APICalls {
         .then(data => data.json())
     }
     return fetch(`${apiURL}${category}/?${queryName}=${parameter}`)
-      .then(data => data.json())
-  }
-
-  getOneFromCategoryWithQuery(category, id, queryName, parameter) {
-    return fetch(`${apiURL}${category}/${id}/?${queryName}=${parameter}/`)
       .then(data => data.json())
   }
 

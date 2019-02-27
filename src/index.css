@@ -2,3 +2,25 @@
   margin-bottom: 0 !important;
   line-height: 1.5;
 }
+
+.addButton, .editButton {
+  margin-top: 50px;
+  margin-bottom: 50px
+}
+
+.listItems {
+  max-width: 70%;
+  margin: 0 auto
+}
+
+.detailView, #futureTrainings {
+  width: 70%;
+  margin: 0 auto;
+  margin-bottom: 20px
+}
+
+.form {
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}

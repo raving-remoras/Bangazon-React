@@ -14,9 +14,14 @@ import {
 import Customers from "./customers/customers"
 import CustomerDetail from "./customers/customerDetail"
 import NewCustomer from "./customers/newCustomer"
+import Products from "./products/products"
+import ProductTypes from "./product_types/product_types"
+import ProductDetail from "./products/product_detail/product_detail"
+import ProductTypeDetail from "./product_types/product_type_detail/product_type_detail"
 
 class EcommerceRouter extends Component {
   state = {  }
+
   render() {
     return (
       <>
@@ -25,6 +30,12 @@ class EcommerceRouter extends Component {
             <NavItem>
               <NavLink tag={RouterNavLink} to="/ecommerce/customers">Customers</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={RouterNavLink} to="/ecommerce/products">Products</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink tag={RouterNavLink} to="/ecommerce/producttypes">Product Types</NavLink>
+            </NavItem>
           </Nav>
         </Navbar>
 
@@ -32,11 +43,11 @@ class EcommerceRouter extends Component {
         <Switch>
           <Route exact path="/ecommerce/customers" render={props => <Customers {...props} />} />
           <Route exact path="/ecommerce/customers/new" render={props => <NewCustomer {...props} />} />
-          <Route
-            path="/ecommerce/customers/:customerId(\d+)"
-            render={props => {
-              return <CustomerDetail {...props} />
-            }} />
+          <Route path="/ecommerce/customers/:customerId(\d+)" render={props => <CustomerDetail {...props} />} />
+          <Route exact path="/ecommerce/products" render={(props)=> <Products {...props} />}/>
+          <Route exact path="/ecommerce/products/:productId(\d+)" render={(props)=> <ProductDetail {...props}/>}/>
+          <Route exact path="/ecommerce/producttypes" render={(props) => <ProductTypes {...props}/>}/>
+          <Route exact path="/ecommerce/producttypes/:productTypeId(\d+)" render={(props)=> <ProductTypeDetail {...props}/>}/>
         </Switch>
       </>
     )
