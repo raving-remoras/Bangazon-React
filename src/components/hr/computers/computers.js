@@ -5,11 +5,17 @@ import ComputerItem from "./computerItem"
 import ComputerForm from "./computerForm"
 
 class Computers extends Component {
+  /*
+    Class renders computer list page, passes props to Computer Item for individual referencing, as well as ComputerForm
+
+    Author: Rachel Daniel
+  */
   state = {
     add: false,
   }
 
   getComputers = () => {
+    //Method fetches all computers, then sets state
     APICalls.getAllFromCategory("computers")
       .then((computers) => {
         this.setState({computers: computers})
@@ -17,6 +23,7 @@ class Computers extends Component {
   }
 
   toggleAdd = () => {
+    //Method sets state according to whether add form should be visible
     this.setState({add: !this.state.add})
   }
 

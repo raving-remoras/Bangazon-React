@@ -4,12 +4,19 @@ import APICalls from "../../../modules/APICalls"
 import ComputerForm from "./computerForm"
 import PropTypes from "prop-types"
 class ComputerDetail extends Component {
+  /*
+    Class renders detail page-- props come from Computers class
+
+    Author: Rachel Daniel
+  */
   state = {
     isLoaded: false,
     edit: false
   }
 
   getComputer = () => {
+    //Method fetches computer details associated with computer item selected from list page, then sets state
+
     APICalls.getOneFromCategory("computers", parseInt(this.props.match.params.compId))
       .then((computer) => {
         this.setState({computer: computer, isLoaded: true})
@@ -18,6 +25,7 @@ class ComputerDetail extends Component {
   }
 
   toggleEdit = () => {
+    //Method sets state according to whether edit form should be visible
     this.setState({edit: !this.state.edit})
 
 
