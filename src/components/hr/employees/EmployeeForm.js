@@ -21,17 +21,23 @@ class EmployeeForm extends Component {
 
   componentDidMount() {
     if (this.props.employee) {
-      this.setState({
+      let stateObj = {
         employeeFirstName: this.props.employee.first_name,
         employeeLastName: this.props.employee.last_name,
         employeeStartDate: this.props.employee.startDate,
         employeeEndtDate: this.props.employee.endDate,
         employeeSupervisor: this.props.employee.is_supervisor,
-        employeeComputer: this.props.employee.current_computer.computer.id,
         employeeDepartment: this.props.employee.department
-      })
+      }
+      if(this.props.employee.current_computer){
+        stateObj.employeeComputer = this.props.employee.current_computer.computer.id
+      }
+      this.setState(stateObj)
     }
+
     this.getComputers()
+
+
     this.defaultComputer()
     this.defaultDepartment()
     this.getDepartments()

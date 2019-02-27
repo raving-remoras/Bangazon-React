@@ -25,7 +25,7 @@ class EmployeeDetailPage extends Component {
     if(this.state.edit === false){
       return <Button onClick={()=>this.formToggle()}>+</Button>
     }else if(this.state.edit === true){
-      return <EmployeeForm formToggle={this.formToggle} refresh={this.refresh}/>
+      return <EmployeeForm employee={this.state.employee} formToggle={this.formToggle} refresh={this.refresh}/>
     }
   }
 
@@ -76,7 +76,7 @@ class EmployeeDetailPage extends Component {
               <dt className="col-sm-3">Current Computer</dt>
               <dd className="col-sm-9">{this.state.employee.current_computer.computer.make} {this.state.employee.current_computer.computer.model} {this.state.employee.current_computer.computer.serial_no}</dd>
               </>
-            : <p>Here!</p>}
+            : null}
         </dl>
       </Container>
     )
