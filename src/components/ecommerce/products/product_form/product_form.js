@@ -134,7 +134,7 @@ class ProductForm extends Component {
   render() {
     return (
       <Container>
-        <Form
+        <Form className="form"
           onSubmit={(evt)=> {
             evt.preventDefault()
             {

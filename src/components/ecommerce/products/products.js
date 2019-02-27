@@ -29,12 +29,12 @@ class Products extends Component {
 
   productList = (products) => {
     return (
-      <ListGroup>
+      <ListGroup className="listItems">
         <ListGroupItem color="info">
           <Row>
-            <Col><h6>Title</h6></Col>
-            <Col><h6>Price</h6></Col>
-            <Col><h6>Quantity</h6></Col>
+            <Col xs={4} className=" d-flex align-items-center text-center"><h6>Title</h6></Col>
+            <Col xs={4} className=" d-flex align-items-center text-center"><h6>Price</h6></Col>
+            <Col xs={4} className=" d-flex align-items-center text-center"><h6>Quantity</h6></Col>
           </Row>
         </ListGroupItem>
         {
@@ -43,9 +43,9 @@ class Products extends Component {
               return(
                 <ListGroupItem tag="a" href={`products/${product.id}`} key={product.url} action>
                   <Row>
-                    <Col>{product.title}</Col>
-                    <Col>${product.price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}</Col>
-                    <Col>{product.quantity}</Col>
+                    <Col xs={4} className=" d-flex align-items-center text-center">{product.title}</Col>
+                    <Col xs={4} className=" d-flex align-items-center text-center">${product.price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}</Col>
+                    <Col xs={4} className=" d-flex align-items-center text-center">{product.quantity}</Col>
                   </Row>
                 </ListGroupItem>
               )})
@@ -57,30 +57,30 @@ class Products extends Component {
 
   render() {
     return (
-      <Container>
-        <Row>
-          <Col className="mb-5">
-            <h1>Products</h1>
-          </Col>
-          {
-            (this.state.add === true)
-              ? <ProductForm
-                toggle={this.toggleAdd}
-                refresh={this.refreshData}
-              />
-              : null
-          }
+      <>
+        <Container className="text-center">
+          <h1>Products</h1>
+        </Container>
+        <Container className="text-center addButton">
           {
             (this.state.add === false)
-              ? <Col md="3" className="ml-auto align-right">
-                <Button color="primary" className="ml-2" onClick={()=>this.toggleAdd()}>Add Product</Button></Col>
-              : <Col md="3" className="ml-auto align-right">
-                <Button color="danger" className="ml-2" onClick={()=>this.toggleAdd()}>Cancel</Button>
-              </Col>
+              ?
+              <Button color="primary" className="ml-2" onClick={()=>this.toggleAdd()}>Add Product</Button>
+              :
+              <Button color="danger" className="ml-2" onClick={()=>this.toggleAdd()}>Cancel</Button>
           }
-        </Row>
+        </Container>
+        {
+          (this.state.add === true)
+            ? <ProductForm
+              toggle={this.toggleAdd}
+              refresh={this.refreshData}
+            />
+            : null
+        }
         {this.productList(this.state.products)}
-      </Container>
+
+      </>
     )
   }
 }

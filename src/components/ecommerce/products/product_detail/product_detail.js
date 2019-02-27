@@ -37,13 +37,9 @@ class ProductDetail extends Component {
   productDetail = (product, product_type) => {
     return(
       product
-        ? <>
-        <Row>
-          <Col className="mb-5">
-            <h1>{product.title}</h1>
-          </Col>
-        </Row>
-        <ListGroup>
+        ?
+        <>
+        <ListGroup className="detailView">
           <ListGroupItem>
             {
               product_type
@@ -78,7 +74,21 @@ class ProductDetail extends Component {
 
   render() {
     return (
-      <Container>
+      <>
+        {
+          (this.state.product_detail)
+            ?<Container className="text-center">
+              <h1>{this.state.product_detail.title}</h1>
+            </Container>
+            : null
+        }
+        <Container className="text-center editButton">
+          {
+            (this.state.edit === false )
+              ?<Button color="primary" onClick={()=> this.toggleEdit()}>Edit Product</Button>
+              :<Button color="danger" onClick={()=> this.toggleEdit()}>Cancel</Button>
+          }
+        </Container>
         {
           (this.state.edit === true)
             ? <ProductForm
@@ -90,17 +100,11 @@ class ProductDetail extends Component {
             : null
         }
         {
-          (this.state.edit === false )
-            ?<Button color="primary" onClick={()=> this.toggleEdit()}>Edit Product</Button>
-            :<Button color="danger" onClick={()=> this.toggleEdit()}>Cancel</Button>
-        }
-        {
           (this.state.isLoaded === true)
             ? this.productDetail(this.state.product_detail, this.state.product_type)
             : null
         }
-      </Container>
-
+    </>
     )
   }
 }

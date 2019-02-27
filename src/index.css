@@ -18,3 +18,24 @@
   max-width: 70%;
   margin: 0 auto
 }
+
+.addButton, .editButton{
+  margin-top: 50px;
+  margin-bottom: 50px
+}
+
+.listItems{
+  max-width: 70%;
+  margin: 0 auto
+}
+
+.detailView {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.form {
+  width: 60%;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
