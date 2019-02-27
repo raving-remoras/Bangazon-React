@@ -11,24 +11,16 @@ class Trainings extends Component {
     Author: Rachel Daniel
   */
   state = {
-    add: false,
-    completed: true
+    add: false
   }
 
 
   getTrainings = () => {
     //Method fetches all trainings, then sets state
-    if (this.state.completed === true){
-      APICalls.getAllFromCategory("trainings")
-        .then((trainings) => {
-          this.setState({trainings: trainings})
-        })
-    } else {
-      APICalls.getAllFromCategoryWithQuery("trainings", "completed", "false")
-        .then((trainings) => {
-          this.setState({trainings: trainings})
-        })
-    }
+    APICalls.getAllFromCategory("trainings")
+      .then((trainings) => {
+        this.setState({trainings: trainings})
+      })
   }
 
   toggleAdd = () => {
@@ -36,11 +28,15 @@ class Trainings extends Component {
     this.setState({add: !this.state.add})
   }
 
-  toggleFuture = () => {
-    this.setState({completed: !this.state.completed})
-      .then(() => {
-        this.getTrainings()
-      })
+  toggleFuture = (e) => {
+    if (e.target.checked){
+      APICalls.getAllFromCategoryWithQuery("trainings", "completed", "false")
+        .then((trainings) => {
+          this.setState({trainings: trainings})
+        })
+    } else {
+      this.getTrainings()
+    }
   }
 
   componentDidMount() {
@@ -73,7 +69,7 @@ class Trainings extends Component {
             <Label check>
               <Input type="checkbox"
                 onClick={(e) => {
-                  this.toggleFuture()
+                  this.toggleFuture(e)
                 }}
               />{" "}
               Future Trainings Only
