@@ -14,6 +14,8 @@ import {
 import Employees from "./employees/employees"
 import Computers from "./computers/computers"
 import ComputerDetail from "./computers/computerDetail"
+import Trainings from "./trainings/trainings"
+import TrainingDetail from "./trainings/trainingDetail"
 
 class HrRouter extends Component {
   state = {  }
@@ -28,6 +30,9 @@ class HrRouter extends Component {
             <NavItem>
               <NavLink tag={RouterNavLink} to="/hr/computers">Computers</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={RouterNavLink} to="/hr/trainings">Trainings</NavLink>
+            </NavItem>
           </Nav>
         </Navbar>
 
@@ -36,6 +41,9 @@ class HrRouter extends Component {
           <Route path="/hr/employees" render={(props) => <Employees {...props} />} />
           <Route exact path="/hr/computers" render={(props) => <Computers {...props} />} />
           <Route path="/hr/computers/:compId(\d+)" render={(props) => <ComputerDetail {...props}/>}
+          />
+          <Route exact path="/hr/trainings" render={(props) => <Trainings {...props} />} />
+          <Route path="/hr/trainings/:trainingId(\d+)" render={(props) => <TrainingDetail {...props}/>}
           />
         </Switch>
       </>

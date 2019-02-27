@@ -1,20 +1,20 @@
-#compDetail {
+#compDetail, #trainingDetail {
   width: 30%;
   margin: 0 auto;
 }
 
-#compEdit, #compAdd {
+#compEdit, #compAdd, #trainingEdit, #trainingAdd  {
   margin-top: 50px;
   margin-bottom: 50px
 }
 
-#compForm {
+#compForm, #trainingForm {
   width: 60%;
   margin: 0 auto;
   margin-bottom: 50px;
 }
 
-#computerList{
+#computerList, #trainingList{
   max-width: 70%;
   margin: 0 auto
 }
