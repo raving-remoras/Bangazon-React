@@ -64,6 +64,7 @@ class ComputerForm extends Component {
   render() {
     return(
       <Form
+        id="compForm"
         onSubmit={(e) => {
           e.preventDefault()
           {

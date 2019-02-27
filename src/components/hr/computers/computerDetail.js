@@ -1,7 +1,8 @@
 import React, { Component } from "react"
-import { Container, Button} from "reactstrap"
+import { Button, Container} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
 import ComputerForm from "./computerForm"
+import PropTypes from "prop-types"
 class ComputerDetail extends Component {
   state = {
     isLoaded: false,
@@ -29,6 +30,13 @@ class ComputerDetail extends Component {
   render() {
     return(
       <>
+        <Container className="text-center" id="compEdit">
+          {
+            (this.state.edit === false)
+              ? <Button color="primary" onClick={() => this.toggleEdit()}>Edit Computer</Button>
+              : <Button color="danger" onClick={() => this.toggleEdit()}>Cancel</Button>
+          }
+        </Container>
         {
           (this.state.edit === true)
             ? <ComputerForm
@@ -39,20 +47,20 @@ class ComputerDetail extends Component {
             : null
         }
         {
-          (this.state.edit === false)
-            ? <Button color="primary" onClick={() => this.toggleEdit()}>Edit Computer</Button>
-            : <Button color="danger" onClick={() => this.toggleEdit()}>Cancel</Button>
-        }
-        {
           (this.state.isLoaded === true)
             ?
-            <Container>
-              <p>Make: {this.state.computer.make}</p>
-              <p>Model: {this.state.computer.model}</p>
-              <p>Serial No: {this.state.computer.serial_no}</p>
-              <p>Purchase Date: {this.state.computer.purchase_date}</p>
-              <p>Retire Date: {this.state.computer.retire_date}</p>
-            </Container>
+            <dl className="row" id="compDetail">
+              <dt className="col-sm-6">Make:</dt>
+              <dd className="col-sm-6">{this.state.computer.make}</dd>
+              <dt className="col-sm-6">Model:</dt>
+              <dd className="col-sm-6">{this.state.computer.model}</dd>
+              <dt className="col-sm-6">Serial No:</dt>
+              <dd className="col-sm-6">{this.state.computer.serial_no}</dd>
+              <dt className="col-sm-6">Purchase Date:</dt>
+              <dd className="col-sm-6">{this.state.computer.purchase_date}</dd>
+              <dt className="col-sm-6">Retire Date:</dt>
+              <dd className="col-sm-6">{this.state.computer.retire_date}</dd>
+            </dl>
             : null
         }
 
@@ -62,3 +70,7 @@ class ComputerDetail extends Component {
 }
 
 export default ComputerDetail
+
+ComputerDetail.propTypes = {
+  match: PropTypes.object.isRequired
+}

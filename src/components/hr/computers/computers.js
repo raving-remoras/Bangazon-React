@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Button, ListGroup, ListGroupItem, Row, Col} from "reactstrap"
+import { Button, ListGroup, ListGroupItem, Row, Col, Container} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
 import ComputerItem from "./computerItem"
 import ComputerForm from "./computerForm"
@@ -27,7 +27,16 @@ class Computers extends Component {
   render() {
     return (
       <>
-        <h1>Computers</h1>
+        <Container className="text-center">
+          <h1 id="compHead">Computers</h1>
+        </Container>
+        <Container className="text-center" id="compAdd">
+          {
+            (this.state.add === false)
+              ? <Button color="primary" onClick={() => this.toggleAdd()}>Add Computer</Button>
+              : <Button color="danger" onClick={() => this.toggleAdd()}>Cancel</Button>
+          }
+        </Container>
       {
         (this.state.add === true)
           ? <ComputerForm
@@ -36,15 +45,9 @@ class Computers extends Component {
           />
           : null
       }
-        {
-          (this.state.add === false)
-            ? <Button color="primary" onClick={() => this.toggleAdd()}>Add Computer</Button>
-            : <Button color="danger" onClick={() => this.toggleAdd()}>Cancel</Button>
-        }
-
       {
         (this.state.computers)
-          ? <ListGroup>
+          ? <ListGroup id="computerList">
             <ListGroupItem color="info">
               <Row>
                 <Col xs={4} className=" d-flex align-items-center text-center">

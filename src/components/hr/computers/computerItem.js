@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { ListGroupItem, Row, Col } from "reactstrap"
 import PropTypes from "prop-types"
-// import { Link } from "react-router-dom"
 
 
 class ComputerItem extends Component {
