@@ -102,5 +102,7 @@ class CustomerListItem extends Component {
 export default CustomerListItem
 
 CustomerListItem.propTypes = {
-  customer: PropTypes.object.isRequired
+  customer: PropTypes.object.isRequired,
+  showProducts: PropTypes.bool,
+  showPayments: PropTypes.bool
 }

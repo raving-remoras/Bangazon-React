@@ -11,7 +11,7 @@ import {
 } from "reactstrap"
 
 import APICalls from "../../../modules/APICalls"
-import CustomerForm from "./customerForm";
+import CustomerForm from "./customerForm"
 
 class CustomerDetail extends Component {
   state = {
@@ -169,3 +169,7 @@ class CustomerDetail extends Component {
 }
 
 export default CustomerDetail
+
+CustomerDetail.propTypes = {
+  match: PropTypes.object
+}

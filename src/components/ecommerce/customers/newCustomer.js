@@ -4,7 +4,7 @@ import {
   Col,
   Container
 } from "reactstrap"
-import CustomerForm from "./customerForm";
+import CustomerForm from "./customerForm"
 
 class NewCustomer extends Component {
   render() {

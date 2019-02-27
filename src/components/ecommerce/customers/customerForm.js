@@ -58,7 +58,7 @@ class CustomerForm extends Component {
         .then(() => this.props.toggleEdit())
     } else {
       return APICalls.post("customers", obj)
-        .then(() => this.props.history.push('/ecommerce/customers'))
+        .then(() => this.props.history.push("/ecommerce/customers"))
     }
   }
 
