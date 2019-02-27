@@ -4,22 +4,65 @@ import PropTypes from "prop-types"
 import {
   Row,
   Col,
-  ListGroupItem
+  ListGroupItem,
+  ListGroup
 } from "reactstrap"
 
 class CustomerListItem extends Component {
 
-  state = {  }
+  productsList = (products) => {
+    return (
+      <Col className="mt-3">
+        <h6 className="text-black-50">Products</h6>
+        <ListGroup className="mt-2 mb-1">
+          {
+            products.length
+              ? products.map((product, i) => {
+                return (
+                  <ListGroupItem key={i}>
+                    {product.title}
+                  </ListGroupItem>
+                )
+              })
+              : <ListGroupItem>Customer has no products for sale.</ListGroupItem>
+          }
+        </ListGroup>
+      </Col>
+    )
+  }
+
+  paymentsList = (payments) => {
+    return (
+      <Col className="mt-3">
+        <h6 className="text-black-50">Used Payment Types</h6>
+        <ListGroup className="mt-2 mb-1">
+          {
+            payments.length
+              ? payments.map((payment, i) => {
+                return (
+                  <ListGroupItem key={i}>
+                    {payment.name}
+                  </ListGroupItem>
+                )
+              })
+              : <ListGroupItem>Customer has no used payment types.</ListGroupItem>
+          }
+        </ListGroup>
+      </Col>
+    )
+  }
+
 
   render() {
 
     const { customer } = this.props
 
+
     return (
-      <ListGroupItem tag="a" href={`customers/${customer.id}`} action>
+      <ListGroupItem className="mb-3" tag="a" href={`customers/${customer.id}`} action>
         <Row>
           <Col lg={2}>
-            {customer.first_name} {customer.last_name}
+            <h6>{customer.first_name} {customer.last_name}</h6>
           </Col>
           <Col lg={3}>
             {customer.email}
@@ -37,6 +80,18 @@ class CustomerListItem extends Component {
           <Col lg={2} className="d-none d-lg-block">
             {customer.join_date}
           </Col>
+        </Row>
+        <Row>
+          {
+            this.props.showProducts
+              ? this.productsList(this.props.customer.product)
+              : null
+          }
+          {
+            this.props.showPayments
+              ? this.paymentsList(this.props.customer.used_paymenttypes)
+              : null
+          }
         </Row>
       </ListGroupItem>
     )

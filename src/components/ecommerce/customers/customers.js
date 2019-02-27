@@ -4,6 +4,7 @@ import {
   Container,
   ListGroup,
   ListGroupItem,
+  CustomInput,
   Row,
   Col
 } from "reactstrap"
@@ -14,12 +15,65 @@ import CustomerListItem from "./customerListItem"
 class Customers extends Component {
 
   state = {
-    employees: []
+    customers: [],
+    productsSwitch: false,
+    paymentsSwitch: false,
+    activeSwitch: false,
+    inactiveSwitch: false,
+    queryNames: [],
+    queryParams: [],
   }
 
   componentDidMount() {
-    APICalls.getAllFromCategory("customers")
+    // APICalls.getAllFromCategory("customers")
+    //   .then(customers => this.setState({customers}))
+
+    APICalls.getAllFromCategoryWithQuery("customers", ["_include"], ["products,payments"])
       .then(customers => this.setState({customers}))
+  }
+
+  onChangeToggle = (e) => {
+
+    this.setState({
+      [e.target.id] : !this.state[e.target.id]
+    })
+
+    if(e.target.id === "activeSwitch") {
+      this.setState({
+        inactiveSwitch: false
+      })
+    }
+
+    if(e.target.id === "inactiveSwitch") {
+      this.setState({
+        activeSwitch: false
+      })
+    }
+
+    if(e.target.id === "inactiveSwitch" || e.target.id === "activeSwitch") {
+      this.updateQueryParams(e)
+    }
+
+  }
+
+  // Called by onToggleChange when
+  updateQueryParams = (e) => {
+    let queryNames = ["_include"]
+    let queryParams = ["products,payments"]
+
+    if (e.target.id === "activeSwitch" && e.target.checked) {
+      queryNames.push("active")
+      queryParams.push("true")
+    }
+    if (e.target.id === "inactiveSwitch" && e.target.checked) {
+      queryNames.push("active")
+      queryParams.push("false")
+    }
+
+    this.setState({queryNames: queryNames, queryParams: queryParams})
+    return APICalls.getAllFromCategoryWithQuery("customers", queryNames, queryParams)
+      .then(customers => this.setState({customers}))
+
   }
 
   CustomersList = customers => {
@@ -38,7 +92,7 @@ class Customers extends Component {
         {
           customers
             ? customers.map((customer, i) => {
-              return (<CustomerListItem key={i} customer={customer} />)
+              return (<CustomerListItem key={i} customer={customer} showProducts={this.state.productsSwitch} showPayments={this.state.paymentsSwitch} />)
             })
             : null
         }
@@ -48,15 +102,29 @@ class Customers extends Component {
 
   render() {
     return (
-      <Container>
+      <Container className="mb-5">
         <Row>
-          <Col className="mb-5">
+          <Col className="mb-3">
             <h1>Customers</h1>
           </Col>
-          <Col md="6" className="text-right">
-            <Button className="ml-auto">Search</Button>
-            <Button className="ml-2">Filter</Button>
-            <Button className="ml-2">Create</Button>
+        </Row>
+        <Row>
+          <Col className="d-lg-flex">
+            <div className="mr-4">
+              <CustomInput onChange={this.onChangeToggle} type="switch" id="productsSwitch" name="customSwitch" label="Include Products" className="mb-3" checked={this.state.productsSwitch} />
+            </div>
+            <div className="mr-4">
+              <CustomInput onChange={this.onChangeToggle} type="switch" id="paymentsSwitch" name="customSwitch" label="Include Payment Types" className="mb-3" checked={this.state.paymentsSwitch} />
+            </div>
+            <div className="mr-4">
+              <CustomInput onChange={this.onChangeToggle} type="switch" id="activeSwitch" name="customSwitch" label="Only Active" className="mb-3" checked={this.state.activeSwitch} />
+            </div>
+            <div className="mr-4">
+              <CustomInput onChange={this.onChangeToggle} type="switch" id="inactiveSwitch" name="customSwitch" label="Only Inactive" className="mb-3" checked={this.state.inactiveSwitch} />
+            </div>
+            <div className="ml-auto">
+              <Button className="ml-2 mb-3" color="success" tag="a" href="/ecommerce/customers/new">Create New Customer</Button>
+            </div>
           </Col>
         </Row>
         <Row>
