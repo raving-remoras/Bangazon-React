@@ -148,10 +148,18 @@ class Customers extends Component {
           <Col className="mb-3" lg={6}>
             <Form onChange={this.searchQuery} onSubmit={this.submitSearch}>
               <InputGroup>
-                <Input type="text" id="customerSearch" name="customerSearch" placeholder="Search Customers" />
+                <Input type="text" id="customerSearch" name="customerSearch" placeholder="Search Customers" value={this.state.searchQuery} />
                 <InputGroupAddon addonType="append">
                   <Button type="submit" color="primary">Search</Button>
                 </InputGroupAddon>
+                {
+                  this.state.displayingSearchResults
+                    ? (
+                      <InputGroupAddon addonType="append">
+                        <Button type="button" color="danger" onClick={this.clearSearch}>Clear</Button>
+                      </InputGroupAddon>
+                    ) : null
+                }
               </InputGroup>
             </Form>
 
