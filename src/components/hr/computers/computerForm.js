@@ -63,7 +63,18 @@ class ComputerForm extends Component {
 
   render() {
     return(
-      <Form>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault()
+          {
+            (this.props.computer)
+              ? this.updateComputer()
+                .then(()=> this.props.toggle())
+              : this.addComputer()
+                .then(()=> this.props.toggle())
+          }
+        }}
+      >
         <FormGroup>
           <Label for="make">Make</Label>
           <Input type="text" name="make" id="make" required onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.make} />
@@ -84,17 +95,8 @@ class ComputerForm extends Component {
           <Label for="date">Retire Date</Label>
           <Input type="datetime-local" name="date" id="date" onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.retire_date} />
         </FormGroup>
-        {
-          (this.props.computer)
-            ? <Button color="primary" onClick={() => {
-              this.updateComputer()
-                .then(()=> this.props.toggle())
-            }}>Save</Button>
-            : <Button color="primary" onClick={() => {
-              this.addComputer()
-                .then(()=> this.props.toggle())
-            }}>Save</Button>
-        }
+
+        <Button color="primary" type="submit">Save</Button>
 
       </Form>
     )

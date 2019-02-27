@@ -44,7 +44,7 @@ class ComputerDetail extends Component {
             : <Button color="danger" onClick={() => this.toggleEdit()}>Cancel</Button>
         }
         {
-          (this.state.isLoaded == true)
+          (this.state.isLoaded === true)
             ?
             <Container>
               <p>Make: {this.state.computer.make}</p>
