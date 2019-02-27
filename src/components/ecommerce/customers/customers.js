@@ -102,7 +102,7 @@ class Customers extends Component {
     this.setState({searchQuery: e.target.value})
   }
 
-  clearSearch = (e) => {
+  clearSearch = () => {
     return APICalls.getAllFromCategoryWithQuery("customers", ["_include"], ["products,payments"])
       .then(customers => this.setState({
         customers: customers,
