@@ -38,22 +38,10 @@ class EmployeeDetailPage extends Component {
 
   }
 
-  // departmentDisplay(){
-  //   let form =
-  //   {(this.state.employee.department !== null)
-  //     ? <>
-  //       <dt className="col-sm-3">Department Name</dt>
-  //       <dd className="col-sm-9">{this.state.employee.department.name}</dd>
-  //       </>
-  //     : ""}
-  //   return form
-
-  // }
 
 
 
   render() {
-    console.log(this.state.employee.is_supervisor)
     return (
       <Container>
         <h1>Employees</h1>
@@ -75,7 +63,7 @@ class EmployeeDetailPage extends Component {
               </>
             : null
           }
-          {(this.state.employee.department === !null)
+          {(this.state.employee.department)
             ? <>
               <dt className="col-sm-3">Department Name</dt>
               <dd className="col-sm-9">{this.state.employee.department.name}</dd>
@@ -83,7 +71,7 @@ class EmployeeDetailPage extends Component {
             : null}
 
 
-          {(this.state.employee.current_computer === !null)
+          {(this.state.employee.current_computer)
             ? <>
               <dt className="col-sm-3">Current Computer</dt>
               <dd className="col-sm-9">{this.state.employee.current_computer.computer.make} {this.state.employee.current_computer.computer.model} {this.state.employee.current_computer.computer.serial_no}</dd>
