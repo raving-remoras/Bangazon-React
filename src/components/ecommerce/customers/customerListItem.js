@@ -16,7 +16,7 @@ class CustomerListItem extends Component {
     const { customer } = this.props
 
     return (
-      <ListGroupItem tag="a" href={`employees/${customer.id}`} action>
+      <ListGroupItem tag="a" href={`customers/${customer.id}`} action>
         <Row>
           <Col lg={2}>
             {customer.first_name} {customer.last_name}

@@ -31,7 +31,7 @@ class Customers extends Component {
             <Col lg={3}><h6>E-mail</h6></Col>
             <Col lg={1}><h6>Username</h6></Col>
             <Col lg={2}><h6>Address</h6></Col>
-            <Col  lg={2} className="d-none d-lg-block"><h6>Phone</h6></Col>
+            <Col lg={2} className="d-none d-lg-block"><h6>Phone</h6></Col>
             <Col lg={2}><h6>Join Date</h6></Col>
           </Row>
         </ListGroupItem>
