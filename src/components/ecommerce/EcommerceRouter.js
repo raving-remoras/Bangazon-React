@@ -12,6 +12,8 @@ import {
 } from "reactstrap"
 
 import Customers from "./customers/customers"
+import CustomerDetail from "./customers/customerDetail"
+import NewCustomer from "./customers/newCustomer"
 import Products from "./products/products"
 import ProductTypes from "./product_types/product_types"
 import ProductDetail from "./products/product_detail/product_detail"
@@ -39,7 +41,9 @@ class EcommerceRouter extends Component {
 
         {/* Sub Router for all ecommerce paths */}
         <Switch>
-          <Route exact path="/ecommerce/customers" render={(props) => <Customers {...props} />} />
+          <Route exact path="/ecommerce/customers" render={props => <Customers {...props} />} />
+          <Route exact path="/ecommerce/customers/new" render={props => <NewCustomer {...props} />} />
+          <Route path="/ecommerce/customers/:customerId(\d+)" render={props => <CustomerDetail {...props} />} />
           <Route exact path="/ecommerce/products" render={(props)=> <Products {...props} />}/>
           <Route exact path="/ecommerce/products/:productId(\d+)" render={(props)=> <ProductDetail {...props}/>}/>
           <Route exact path="/ecommerce/producttypes" render={(props) => <ProductTypes {...props}/>}/>

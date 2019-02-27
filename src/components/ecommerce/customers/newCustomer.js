@@ -1,30 +1,30 @@
 /**
- * Purpose: Handles the view for all Employees from /api/v1/employees
+ * Displays the new customer form at ecommerce/customers/new
+ *
  * Author: Sebastian Civarolo
  */
 
 import React, { Component } from "react"
 import {
-  Container,
-  Col,
   Row,
+  Col,
+  Container
 } from "reactstrap"
+import CustomerForm from "./customerForm"
 
-class Employees extends Component {
-
-  state = { }
-
+class NewCustomer extends Component {
   render() {
     return (
       <Container>
         <Row>
           <Col className="mb-5">
-            <h1>Employees</h1>
+            <h1>New Customer</h1>
           </Col>
         </Row>
+        <CustomerForm {...this.props} />
       </Container>
     )
   }
 }
 
-export default Employees
+export default NewCustomer
