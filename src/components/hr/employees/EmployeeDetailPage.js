@@ -88,7 +88,7 @@ class EmployeeDetailPage extends Component {
               <dt className="col-sm-3">Current Computer</dt>
               <dd className="col-sm-9">{this.state.employee.current_computer.computer.make} {this.state.employee.current_computer.computer.model} {this.state.employee.current_computer.computer.serial_no}</dd>
               </>
-            : null}
+            : <p>Here!</p>}
         </dl>
       </Container>
     )
