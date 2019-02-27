@@ -17,10 +17,28 @@ class APICalls {
       .then(data => data.json())
   }
 
-  getAllFromCategoryWithQuery(category, queryName, parameter) {
-    return fetch(`${apiURL}${category}/?${queryName}=${parameter}/`)
+  getOneFromCategoryURL(url){
+    return fetch(`${url}`)
+      .then(data => data.json())
+  }
+
+  getOneFromCategoryWithQuery(category, id, queryName, parameter) {
+    return fetch(`${apiURL}${category}/${id}/?${queryName}=${parameter}`)
       .then(data => data.json())
 
+  }
+
+  getAllFromCategoryWithQuery(category, queryName, parameter) {
+    if(Array.isArray(queryName) && Array.isArray(parameter)) {
+      let fullQuery = ""
+      queryName.forEach((name, i) => {
+        fullQuery += `${name}=${parameter[i]}&`
+      })
+      return fetch(`${apiURL}${category}/?${fullQuery}`)
+        .then(data => data.json())
+    }
+    return fetch(`${apiURL}${category}/?${queryName}=${parameter}`)
+      .then(data => data.json())
   }
 
   post(category, obj){

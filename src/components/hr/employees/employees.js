@@ -1,3 +1,8 @@
+/**
+ * Purpose: Handles the view for all Employees from /api/v1/employees
+ * Author: Sebastian Civarolo
+ */
+
 import React, { Component } from "react"
 import { Container } from "reactstrap"
 import APICalls from "../../../modules/APICalls"

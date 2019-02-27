@@ -1,12 +1,12 @@
 import React, { Component } from "react"
 import { Button, ListGroup, ListGroupItem, Row, Col, Container} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
-import ComputerItem from "./computerItem"
-import ComputerForm from "./computerForm"
+import DepartmentItem from "./departmentItem"
+import DepartmentForm from "./departmentForm"
 
-class Computers extends Component {
+class Departments extends Component {
   /*
-    Class renders computer list page, passes props to Computer Item for individual referencing, as well as ComputerForm
+    Class renders department list page, passes props to Department Item for individual referencing, as well as departmentForm
 
     Author: Rachel Daniel
   */
@@ -14,11 +14,11 @@ class Computers extends Component {
     add: false,
   }
 
-  getComputers = () => {
-    //Method fetches all computers, then sets state
-    APICalls.getAllFromCategory("computers")
-      .then((computers) => {
-        this.setState({computers: computers})
+  getDepartments = () => {
+    //Method fetches all departments, then sets state
+    APICalls.getAllFromCategory("departments")
+      .then((departments) => {
+        this.setState({departments: departments})
       })
   }
 
@@ -28,45 +28,41 @@ class Computers extends Component {
   }
 
   componentDidMount() {
-    this.getComputers()
+    this.getDepartments()
   }
 
   render() {
     return (
       <>
         <Container className="text-center">
-          <h1 >Computers</h1>
+          <h1 id="deptHead">Departments</h1>
         </Container>
         <Container className="text-center addButton">
           {
             (this.state.add === false)
-              ? <Button color="primary" onClick={() => this.toggleAdd()}>Add Computer</Button>
+              ? <Button color="primary" onClick={() => this.toggleAdd()}>Add department</Button>
               : <Button color="danger" onClick={() => this.toggleAdd()}>Cancel</Button>
           }
         </Container>
       {
         (this.state.add === true)
-          ? <ComputerForm
+          ? <DepartmentForm
             toggle={this.toggleAdd}
-            refresh={this.getComputers}
+            refresh={this.getDepartments}
           />
           : null
       }
       {
-        (this.state.computers)
+        (this.state.departments)
           ? <ListGroup className="listItems">
             <ListGroupItem color="info">
               <Row>
-                <Col xs={4} className=" d-flex align-items-center text-center">
-                  <h6>Make</h6>
+                <Col xs={6} className=" d-flex align-items-center text-center">
+                  <h6>Name</h6>
 
                 </Col>
-                <Col xs={4} className=" d-flex align-items-center text-center">
-                  <h6>Model</h6>
-
-                </Col>
-                <Col xs={4} className=" d-flex align-items-center text-center">
-                  <h6>Serial No.</h6>
+                <Col xs={6} className=" d-flex align-items-center text-center">
+                  <h6>Budget</h6>
 
                 </Col>
 
@@ -74,9 +70,9 @@ class Computers extends Component {
 
             </ListGroupItem>
             {
-              this.state.computers.map(computer =>
-                <ComputerItem key={computer.id}
-                  computer={computer}
+              this.state.departments.map(department =>
+                <DepartmentItem key={department.id}
+                  department={department}
                   {...this.props}
 
                 />)
@@ -93,4 +89,4 @@ class Computers extends Component {
   }
 }
 
-export default Computers
+export default Departments
