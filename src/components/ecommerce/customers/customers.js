@@ -9,6 +9,10 @@ import React, { Component } from "react"
 import {
   Button,
   Container,
+  Form,
+  Input,
+  InputGroup,
+  InputGroupAddon,
   ListGroup,
   ListGroupItem,
   CustomInput,
@@ -29,6 +33,8 @@ class Customers extends Component {
     inactiveSwitch: false,
     queryNames: [],
     queryParams: [],
+    displayingSearchResults: false,
+    searchQuery: "",
   }
 
   componentDidMount() {
@@ -81,6 +87,32 @@ class Customers extends Component {
 
   }
 
+  submitSearch = (e) => {
+    e.preventDefault()
+    return APICalls.getAllFromCategoryWithQuery("customers", ["_include", "q"], ["products,payments", this.state.searchQuery])
+      .then(customers => this.setState({
+        customers: customers,
+        displayingSearchResults: true,
+        activeSwitch: false,
+        inactiveSwitch: false
+      }))
+  }
+
+  searchQuery = e => {
+    this.setState({searchQuery: e.target.value})
+  }
+
+  clearSearch = (e) => {
+    return APICalls.getAllFromCategoryWithQuery("customers", ["_include"], ["products,payments"])
+      .then(customers => this.setState({
+        customers: customers,
+        displayingSearchResults: false,
+        activeSwitch: false,
+        inactiveSwitch: false,
+        searchQuery: ""
+      }))
+  }
+
   // Handles displaying the list of customers. Called in render()
   CustomersList = customers => {
     return (
@@ -110,8 +142,19 @@ class Customers extends Component {
     return (
       <Container className="mb-5">
         <Row>
-          <Col className="mb-3">
+          <Col className="mb-3" lg={6}>
             <h1>Customers</h1>
+          </Col>
+          <Col className="mb-3" lg={6}>
+            <Form onChange={this.searchQuery} onSubmit={this.submitSearch}>
+              <InputGroup>
+                <Input type="text" id="customerSearch" name="customerSearch" placeholder="Search Customers" />
+                <InputGroupAddon addonType="append">
+                  <Button type="submit" color="primary">Search</Button>
+                </InputGroupAddon>
+              </InputGroup>
+            </Form>
+
           </Col>
         </Row>
         <Row>
@@ -135,7 +178,12 @@ class Customers extends Component {
         </Row>
         <Row>
           <Col>
-            {this.CustomersList(this.state.customers)}
+            {
+              this.state.displayingSearchResults && !this.state.customers.length
+                ? <h4>{`No results matching "${this.state.searchQuery}"`}</h4>
+                : this.CustomersList(this.state.customers)
+
+            }
           </Col>
         </Row>
       </Container>
