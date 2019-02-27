@@ -78,7 +78,7 @@ class DepartmentForm extends Component {
         </FormGroup>
         <FormGroup>
           <Label for="budget">Budget</Label>
-          <Input type="text" name="budget" id="budget" required onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.budget} />
+          <Input type="number" name="budget" id="budget" required onChange={(e) => this.handleFieldChange(e)} defaultValue={this.state.budget} />
         </FormGroup>
         <Button color="primary" type="submit">Save</Button>
 
