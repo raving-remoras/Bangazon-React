@@ -1,3 +1,9 @@
+/**
+ * Displays the new customer form at ecommerce/customers/new
+ *
+ * Author: Sebastian Civarolo
+ */
+
 import React, { Component } from "react"
 import {
   Row,

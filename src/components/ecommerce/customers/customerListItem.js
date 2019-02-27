@@ -1,3 +1,9 @@
+/**
+ * Displays a single entry from the api/v1/customers/ query.
+ *
+ * Author: Sebastian Civarolo
+ */
+
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
@@ -10,6 +16,7 @@ import {
 
 class CustomerListItem extends Component {
 
+  // If products toggled, display products for each customer
   productsList = (products) => {
     return (
       <Col className="mt-3">
@@ -31,6 +38,7 @@ class CustomerListItem extends Component {
     )
   }
 
+  // If used payment types toggled, display used payment types for each customer.
   paymentsList = (payments) => {
     return (
       <Col className="mt-3">

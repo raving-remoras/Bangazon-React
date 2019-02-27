@@ -1,3 +1,10 @@
+/**
+ * Allows user to interact with the api/v1/customers/ endpoint.
+ * Gets a list of customers based on a set of parameters available on the page.
+ *
+ * Author: Sebastian Civarolo
+ */
+
 import React, { Component } from "react"
 import {
   Button,
@@ -25,13 +32,11 @@ class Customers extends Component {
   }
 
   componentDidMount() {
-    // APICalls.getAllFromCategory("customers")
-    //   .then(customers => this.setState({customers}))
-
     APICalls.getAllFromCategoryWithQuery("customers", ["_include"], ["products,payments"])
       .then(customers => this.setState({customers}))
   }
 
+  // Checks which filters are toggled
   onChangeToggle = (e) => {
 
     this.setState({
@@ -56,7 +61,7 @@ class Customers extends Component {
 
   }
 
-  // Called by onToggleChange when
+  // Called by onToggleChange when active/inactive is toggled to fetch a new set of customers
   updateQueryParams = (e) => {
     let queryNames = ["_include"]
     let queryParams = ["products,payments"]
@@ -76,6 +81,7 @@ class Customers extends Component {
 
   }
 
+  // Handles displaying the list of customers. Called in render()
   CustomersList = customers => {
     return (
       <ListGroup>

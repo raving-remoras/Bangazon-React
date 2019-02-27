@@ -1,3 +1,10 @@
+/**
+ * Displays the details of a single customer at /customers/customerId
+ * Conditionally display products and payment types.
+ *
+ * Author: Sebastian Civarolo
+ */
+
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import {

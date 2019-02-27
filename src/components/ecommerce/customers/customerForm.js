@@ -1,3 +1,9 @@
+/**
+ * Reusuable component for both editing or creating a new customer.
+ *
+ * Author: Sebastian Civarolo
+ */
+
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import {
@@ -52,6 +58,8 @@ class CustomerForm extends Component {
     // obj.phone_number = Number(obj.phone_number)
     obj.delete_date = obj.delete_date || null
 
+    // If customer was passed in, then we are editing.
+    // If not, we are creating a new customer.
     if (this.props.customer) {
       return APICalls.update("customers", obj, this.props.customer.id)
         .then((customer) => this.props.loadCustomer(customer.id))
