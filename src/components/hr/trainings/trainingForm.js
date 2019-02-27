@@ -68,7 +68,7 @@ class TrainingForm extends Component {
   render() {
     return(
       <Form
-        id="trainingForm"
+        className="form"
         onSubmit={(e) => {
           e.preventDefault()
           {

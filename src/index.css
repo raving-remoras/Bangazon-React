@@ -1,24 +1,21 @@
-#compDetail, #trainingDetail, #deptDetail {
-  width: 30%;
-  margin: 0 auto;
-}
 
-
-#compEdit, #compAdd, #trainingEdit, #trainingAdd, #deptEdit, #deptAdd  {
-
+.addButton, .editButton{
   margin-top: 50px;
   margin-bottom: 50px
 }
 
+.listItems{
+  max-width: 70%;
+  margin: 0 auto
+}
 
-#compForm, #trainingForm, #deptForm {
+.detailView {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.form {
   width: 60%;
   margin: 0 auto;
   margin-bottom: 50px;
-}
-
-#computerList, #trainingList, #futureTrainings, #deptList {
-  max-width: 70%;
-  margin: 0 auto;
-  margin-bottom: 30px
 }

@@ -38,7 +38,7 @@ class ComputerDetail extends Component {
   render() {
     return(
       <>
-        <Container className="text-center" id="compEdit">
+        <Container className="text-center editButton">
           {
             (this.state.edit === false)
               ? <Button color="primary" onClick={() => this.toggleEdit()}>Edit Computer</Button>
@@ -57,7 +57,7 @@ class ComputerDetail extends Component {
         {
           (this.state.isLoaded === true)
             ?
-            <dl className="row" id="compDetail">
+            <dl className="row detailView" >
               <dt className="col-sm-6">Make:</dt>
               <dd className="col-sm-6">{this.state.computer.make}</dd>
               <dt className="col-sm-6">Model:</dt>

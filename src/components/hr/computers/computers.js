@@ -35,9 +35,9 @@ class Computers extends Component {
     return (
       <>
         <Container className="text-center">
-          <h1 id="compHead">Computers</h1>
+          <h1 >Computers</h1>
         </Container>
-        <Container className="text-center" id="compAdd">
+        <Container className="text-center addButton">
           {
             (this.state.add === false)
               ? <Button color="primary" onClick={() => this.toggleAdd()}>Add Computer</Button>
@@ -54,7 +54,7 @@ class Computers extends Component {
       }
       {
         (this.state.computers)
-          ? <ListGroup id="computerList">
+          ? <ListGroup className="listItems">
             <ListGroupItem color="info">
               <Row>
                 <Col xs={4} className=" d-flex align-items-center text-center">

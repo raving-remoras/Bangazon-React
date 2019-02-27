@@ -16,7 +16,6 @@ class Departments extends Component {
 
   getDepartments = () => {
     //Method fetches all departments, then sets state
-    console.log("refreshing")
     APICalls.getAllFromCategory("departments")
       .then((departments) => {
         this.setState({departments: departments})
@@ -38,7 +37,7 @@ class Departments extends Component {
         <Container className="text-center">
           <h1 id="deptHead">Departments</h1>
         </Container>
-        <Container className="text-center" id="compAdd">
+        <Container className="text-center addButton">
           {
             (this.state.add === false)
               ? <Button color="primary" onClick={() => this.toggleAdd()}>Add department</Button>
@@ -55,7 +54,7 @@ class Departments extends Component {
       }
       {
         (this.state.departments)
-          ? <ListGroup id="deptList">
+          ? <ListGroup className="listItems">
             <ListGroupItem color="info">
               <Row>
                 <Col xs={6} className=" d-flex align-items-center text-center">

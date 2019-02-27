@@ -49,7 +49,7 @@ class Trainings extends Component {
         <Container className="text-center">
           <h1 id="trainingHead">Trainings</h1>
         </Container>
-        <Container className="text-center" id="trainingAdd">
+        <Container className="text-center addButton">
           {
             (this.state.add === false)
               ? <Button color="primary" onClick={() => this.toggleAdd()}>Add Training</Button>
@@ -78,7 +78,7 @@ class Trainings extends Component {
         </Form>
       {
         (this.state.trainings)
-          ? <ListGroup id="trainingList">
+          ? <ListGroup className="listItems">
             <ListGroupItem color="info">
               <Row>
                 <Col xs={3} className=" d-flex align-items-center text-center">

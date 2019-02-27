@@ -46,7 +46,7 @@ class HrRouter extends Component {
           <Route path="/hr/computers/:compId(\d+)" render={(props) => <ComputerDetail {...props}/>}
           />
           <Route exact path="/hr/trainings" render={(props) => <Trainings {...props} />} />
-          <Route path="/hr/trainings/:trainingId(\d+)" render={(props) => <TrainingDetail {...props}/>}
+          <Route path="/hr/trainings/:trainingId(\d+)" render={(props) => <TrainingDetail {...props}/>} />
           <Route exact path="/hr/departments" render={(props) => <Departments {...props} />} />
           <Route path="/hr/departments/:deptId(\d+)" render={(props) => <DepartmentDetail {...props}/>}
           />
