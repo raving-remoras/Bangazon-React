@@ -16,7 +16,8 @@ class EmployeeForm extends Component {
     computers: [],
     departments: [],
     departmentOption:"",
-    option: ""
+    option: "",
+    loaded: false
   }
 
   componentDidMount() {
@@ -24,10 +25,11 @@ class EmployeeForm extends Component {
       let stateObj = {
         employeeFirstName: this.props.employee.first_name,
         employeeLastName: this.props.employee.last_name,
-        employeeStartDate: this.props.employee.startDate,
-        employeeEndtDate: this.props.employee.endDate,
+        employeeStartDate: this.props.employee.start_date,
+        employeeEndtDate: this.props.employee.end_date,
         employeeSupervisor: this.props.employee.is_supervisor,
-        employeeDepartment: this.props.employee.department
+        employeeDepartment: this.props.employee.department.id,
+        loaded: true
       }
       if(this.props.employee.current_computer){
         stateObj.employeeComputer = this.props.employee.current_computer.computer.id
@@ -113,7 +115,7 @@ class EmployeeForm extends Component {
 
   defaultComputer() {
     let option
-    if (this.state.employeeComputer === null) {
+    if (this.props.employee.current_computer === null) {
       option = <option value={null}>Assign a Computer</option>
     }
     else {
@@ -124,7 +126,7 @@ class EmployeeForm extends Component {
 
   defaultDepartment() {
     let departmentOption
-    if (this.state.employeeDepartment === null) {
+    if (this.props.employee.department === null) {
       departmentOption = <option value={null}>Assign a Department</option>
     }
     else {
@@ -134,6 +136,7 @@ class EmployeeForm extends Component {
   }
 
   render() {
+
     return (
       <Form onSubmit={(e) => {
         e.preventDefault()
