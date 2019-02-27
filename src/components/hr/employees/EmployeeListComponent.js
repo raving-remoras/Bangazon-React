@@ -11,7 +11,7 @@ class EmployeeListComponent extends Component {
   render() {
     return (
       <>
-        <ListGroupItem tag="a" href={`/hr/employee/${this.props.employee.id}`} action>
+        <ListGroupItem tag="a" href={`/hr/employees/${this.props.employee.id}`} action>
           <Row>
             <Col>
               <p>{this.props.employee.first_name}</p>

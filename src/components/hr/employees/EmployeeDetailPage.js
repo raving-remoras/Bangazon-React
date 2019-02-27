@@ -31,14 +31,29 @@ class EmployeeDetailPage extends Component {
 
   refresh = () => {
     APICalls.getOneFromCategory("employees", this.props.match.params.employeeId)
-      .then(employees => this.setState({
-        employees: employees,
+      .then(employee => this.setState({
+        employee: employee,
         edit: false
       }))
 
   }
 
+  // departmentDisplay(){
+  //   let form =
+  //   {(this.state.employee.department !== null)
+  //     ? <>
+  //       <dt className="col-sm-3">Department Name</dt>
+  //       <dd className="col-sm-9">{this.state.employee.department.name}</dd>
+  //       </>
+  //     : ""}
+  //   return form
+
+  // }
+
+
+
   render() {
+    console.log(this.state.employee.is_supervisor)
     return (
       <Container>
         <h1>Employees</h1>
@@ -47,6 +62,33 @@ class EmployeeDetailPage extends Component {
           <dt className="col-sm-3">Employee Name</dt>
           <dd className="col-sm-9">{this.state.employee.first_name} {this.state.employee.last_name}</dd>
 
+          <dt className="col-sm-3">Start Date</dt>
+          <dd className="col-sm-9">{this.state.employee.start_date}</dd>
+
+          <dt className="col-sm-3">End Date</dt>
+          <dd className="col-sm-9">{this.state.employee.end_date}</dd>
+
+          {(this.state.employee.is_supervisor === true)
+            ? <>
+              <dt className="col-sm-3">Supervisor</dt>
+              <dd className="col-sm-9">Yes</dd>
+              </>
+            : null
+          }
+          {(this.state.employee.department === !null)
+            ? <>
+              <dt className="col-sm-3">Department Name</dt>
+              <dd className="col-sm-9">{this.state.employee.department.name}</dd>
+              </>
+            : null}
+
+
+          {(this.state.employee.current_computer === !null)
+            ? <>
+              <dt className="col-sm-3">Current Computer</dt>
+              <dd className="col-sm-9">{this.state.employee.current_computer.computer.make} {this.state.employee.current_computer.computer.model} {this.state.employee.current_computer.computer.serial_no}</dd>
+              </>
+            : null}
         </dl>
       </Container>
     )

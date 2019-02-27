@@ -30,7 +30,7 @@ class HrRouter extends Component {
         {/* Sub Router for all HR paths */}
         <Switch>
           <Route exact path="/hr/employees" render={(props) => <Employees {...props} />} />
-          <Route path="/employees/:employeeId(\d)" render={(props => {
+          <Route path="/hr/employees/:employeeId(\d+)" render={(props => {
             return <EmployeeDetailPage {...props}  />
 
           })} />
