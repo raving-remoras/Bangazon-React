@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Button, ListGroup, ListGroupItem, Row, Col, Container} from "reactstrap"
+import { Button, ListGroup, ListGroupItem, Row, Col, Container, CustomInput} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
 import DepartmentItem from "./departmentItem"
 import DepartmentForm from "./departmentForm"
@@ -12,11 +12,12 @@ class Departments extends Component {
   */
   state = {
     add: false,
+    employeeSwitch: false
   }
 
   getDepartments = () => {
     //Method fetches all departments, then sets state
-    APICalls.getAllFromCategory("departments")
+    APICalls.getAllFromCategoryWithQuery("departments", "_include", "employees")
       .then((departments) => {
         this.setState({departments: departments})
       })
@@ -25,6 +26,11 @@ class Departments extends Component {
   toggleAdd = () => {
     //Method sets state according to whether add form should be visible
     this.setState({add: !this.state.add})
+  }
+
+  toggleEmployee = () => {
+    //Method sets state according to whether add form should be visible
+    this.setState({employeeSwitch: !this.state.employeeSwitch})
   }
 
   componentDidMount() {
@@ -37,6 +43,7 @@ class Departments extends Component {
         <Container className="text-center">
           <h1 id="deptHead">Departments</h1>
         </Container>
+        <CustomInput onChange={this.toggleEmployee} type="switch" id="employeeSwitch" name="customSwitch" label="Include Employees" className="mb-3" checked={this.state.employeeSwitch} />
         <Container className="text-center addButton">
           {
             (this.state.add === false)
@@ -72,6 +79,7 @@ class Departments extends Component {
             {
               this.state.departments.map(department =>
                 <DepartmentItem key={department.id}
+                  showEmployees={this.state.employeeSwitch}
                   department={department}
                   {...this.props}
 
