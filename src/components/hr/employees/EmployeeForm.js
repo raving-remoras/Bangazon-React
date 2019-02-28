@@ -80,34 +80,58 @@ class EmployeeForm extends Component {
         // if edit
         ? APICalls.update("employees", employeeObj, this.props.employee.id)
           .then((employee) => {
+            console.log("employee", employee)
+            compEmployeeJoin.employee = employee.id
+            console.log("join", compEmployeeJoin)
             // if a new computer is assinged, this will add the new relationship and remove the old relationship
-            if (this.props.employee.current_computer === null) {
-              if (this.state.employeeComputer !== null) {
-                compEmployeeJoin.employee = this.props.employee.id
-                APICalls.post("employeecomputers", compEmployeeJoin)
-                  .then(() => this.props.refresh())
+            if (this.state.employeeComputer === "remove") {
+              console.log("REMVOE")
+              console.log("why", this.props.employee.current_computer)
+              let computerUnAssign = {
+                computer: this.props.employee.current_computer.computer.id,
+                make: this.props.employee.current_computer.computer.make,
+                model: this.props.employee.current_computer.computer.model,
+                serial_no: this.props.employee.current_computer.computer.serial_no,
+                purchase_date: this.props.employee.current_computer.computer.purchase_date,
+                employee: employee.id,
+                date_assigned: this.props.employee.current_computer.date_assigned,
+                date_revoked: new Date().toISOString()
               }
+              console.log("computer", computerUnAssign)
+              APICalls.update("employeecomputers", computerUnAssign, this.props.employee.current_computer.employeecomputer_id)
+                .then((data ) => {
+                  console.log("did it work", data)
+                  this.props.refresh()
+                })
+            } else {
+              if (this.props.employee.current_computer === null) {
+                if (this.state.employeeComputer !== null) {
+                  compEmployeeJoin.employee = this.props.employee.id
+                  APICalls.post("employeecomputers", compEmployeeJoin)
+                    .then(() => this.props.refresh())
+                }
 
-            }
-            else {
-              (this.props.employee.current_computer.computer.id === this.state.employeeComputer)
-                ? this.props.refresh()
-                : APICalls.post("employeecomputers", compEmployeeJoin)
-                  .then(() => {
-                    let computerUnAssign = {
-                      computer: this.props.employee.current_computer.computer.id,
-                      make: this.props.employee.current_computer.computer.make,
-                      model: this.props.employee.current_computer.computer.model,
-                      serial_no: this.props.employee.current_computer.computer.serial_no,
-                      purchase_date: this.props.employee.current_computer.computer.purchase_date,
-                      employee: employee.id,
-                      date_assigned: this.props.employee.current_computer.computer.date_assigned,
-                      date_revoked: new Date().toISOString()
-                    }
-                    console.log("computer", computerUnAssign)
-                    APICalls.update("computers", computerUnAssign, computerUnAssign.computer)
-                      .then(() => this.props.refresh())
-                  })
+              }
+              else {
+                (this.props.employee.current_computer.computer.id === this.state.employeeComputer)
+                  ? this.props.refresh()
+                  : APICalls.post("employeecomputers", compEmployeeJoin)
+                    .then(() => {
+                      let computerUnAssign = {
+                        computer: this.props.employee.current_computer.computer.id,
+                        make: this.props.employee.current_computer.computer.make,
+                        model: this.props.employee.current_computer.computer.model,
+                        serial_no: this.props.employee.current_computer.computer.serial_no,
+                        purchase_date: this.props.employee.current_computer.computer.purchase_date,
+                        employee: employee.id,
+                        date_assigned: this.props.employee.current_computer.date_assigned,
+                        date_revoked: new Date().toISOString()
+                      }
+                      console.log("computer", computerUnAssign)
+                      APICalls.update("employeecomputers", computerUnAssign, this.props.employee.current_computer.employeecomputer_id)
+                        .then(() => this.props.refresh())
+                    })
+              }
             }
           })
 
@@ -139,7 +163,11 @@ class EmployeeForm extends Component {
       option = <option value={null}>Assign a Computer</option>
     }
     else if (this.props.employee.current_computer) {
-      option = <option value={this.props.employee.current_computer.computer.id}>{this.props.employee.current_computer.computer.model}, {this.props.employee.current_computer.computer.serial_no}</option>
+      option = <>
+        <option value={this.props.employee.current_computer.computer.id}>{this.props.employee.current_computer.computer.model}, {this.props.employee.current_computer.computer.serial_no}</option>
+        <option value="remove">Remove Computer</option>
+
+      </>
     }
     this.setState({ option })
   }
@@ -155,6 +183,7 @@ class EmployeeForm extends Component {
     }
     else {
       departmentOption = <option value={this.props.employee.department.id}>{this.props.employee.department.name}</option>
+
     }
     this.setState({ departmentOption })
   }
