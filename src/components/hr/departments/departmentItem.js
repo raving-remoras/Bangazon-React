@@ -29,7 +29,7 @@ class DepartmentItem extends Component {
                 <h6 className="text-black-50">Employees</h6>
                 <ListGroup className="mt-2 mb-1">
                   {
-                    (this.props.department.employees.length > 0)
+                    (this.props.department.employees.length)
                       ? this.props.department.employees.map(employee =>
 
                         <ListGroupItem key={employee.id}>

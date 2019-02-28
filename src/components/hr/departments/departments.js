@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Button, ListGroup, ListGroupItem, Row, Col, Container, CustomInput} from "reactstrap"
+import { Button, ListGroup, ListGroupItem, Row, Col, Container, CustomInput, Form, FormGroup, Label, Input} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
 import DepartmentItem from "./departmentItem"
 import DepartmentForm from "./departmentForm"
@@ -33,6 +33,20 @@ class Departments extends Component {
     this.setState({employeeSwitch: !this.state.employeeSwitch})
   }
 
+  handleFieldChange = e => {
+    //function uses ids of form fields as keys, creates an object with input as value, and sets state
+    const stateToChange = {}
+    stateToChange[e.target.id] = e.target.value
+    this.setState(stateToChange)
+  }
+
+  searchByBudget = () => {
+    APICalls.getAllFromCategoryWithQuery("departments", "_filter", `budget&_gt=${this.state.budget}&_include=employees`)
+      .then((departments) => {
+        this.setState({departments: departments})
+      })
+  }
+
   componentDidMount() {
     this.getDepartments()
   }
@@ -43,7 +57,24 @@ class Departments extends Component {
         <Container className="text-center">
           <h1 id="deptHead">Departments</h1>
         </Container>
-        <CustomInput onChange={this.toggleEmployee} type="switch" id="employeeSwitch" name="customSwitch" label="Include Employees" className="mb-3" checked={this.state.employeeSwitch} />
+        <Container className="filterGroup">
+          <CustomInput onChange={this.toggleEmployee} type="switch" id="employeeSwitch" name="customSwitch" label="Include Employees" className="mb-3" checked={this.state.employeeSwitch} />
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault()
+              this.searchByBudget()
+            }}
+          >
+            <FormGroup>
+              <Label for="budget">Minimum Budget</Label>
+              <Input type="number" name="budget" id="budget" required onChange={(e) => this.handleFieldChange(e)} />
+            </FormGroup>
+            <Button color="primary" type="submit">Search</Button>
+            <Button color="info"
+              onClick={()=> this.getDepartments()}
+            >Reset</Button>
+          </Form>
+        </Container>
         <Container className="text-center addButton">
           {
             (this.state.add === false)
