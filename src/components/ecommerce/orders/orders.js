@@ -5,7 +5,8 @@ import {
   ListGroupItem,
   Button,
   Row,
-  Col
+  Col,
+  CustomInput,
 } from "reactstrap"
 import APICalls from "../../../modules/APICalls"
 import OrderForm from "./order_form/order_form"
@@ -24,21 +25,77 @@ class Orders extends Component {
   }
 
   refreshData = () => {
-    APICalls.getAllFromCategoryWithQuery("orders", ["_include"], ["products", "customers"])
+    APICalls.getAllFromCategoryWithQuery("orders", ["_include"], ["products,customers"])
       .then(orders => this.setState({ orders }))
   }
 
   handleChange = (evt) => {
-    this.setState({ [evt.target.id]: !this.state[evt.target.id]  })
+    if (evt.target.id === "completedSwitch"){
+      if(this.state.completedSwitch === false){
+        let completed_orders = this.state.orders.filter(order => order.payment_type !== null)
+        this.setState({ "orders": completed_orders, [evt.target.id]: !this.state[evt.target.id]  })
+      } else{
+        this.refreshData()
+        this.setState({ [evt.target.id]: !this.state[evt.target.id] })
+      }
+    } else if (evt.target.id === "incompleteSwitch"){
+      if(this.state.incompleteSwitch === false){
+        let incomplete_orders = this.state.orders.filter(order => order.payment_type === null)
+        this.setState({ "orders": incomplete_orders, [evt.target.id]: !this.state[evt.target.id]  })
+      } else{
+        this.refreshData()
+        this.setState({ [evt.target.id]: !this.state[evt.target.id]  })
+      }
+    }
+
+    else{
+      this.setState({ [evt.target.id]: !this.state[evt.target.id]  })
+    }
   }
 
-  // toggleAdd = () => {
-  //   this.setState({ add: !this.state.add })
-  // }
+  toggleAdd = () => {
+    this.setState({ add: !this.state.add })
+  }
 
-  // toggleCompleted = () =>{
-  //   this.setState({ completedSwitch: !this.state.completedSwitch  })
-  // }
+  productList = (products) => {
+    return (
+      <Col className="mt-3">
+        <h6 className="text-black-50">Products</h6>
+        <ListGroup className="mt-2 mb-1">
+          {
+            (products.length)
+              ? products.map(product => {
+                return(
+                  <ListGroupItem key={product.product.url}>
+                    {product.product.title}
+                  </ListGroupItem>
+                )
+              })
+              : <ListGroupItem>This order has no products</ListGroupItem>
+          }
+        </ListGroup>
+      </Col>
+
+    )
+  }
+
+  customerList = (customer) => {
+    return (
+      <Col className="mt-3">
+        <h6 className="text-black-50">Customers</h6>
+        <ListGroup className="mt-2 mb-1">
+          {
+            customer
+              ? <ListGroupItem key={customer.url}>
+                {customer.first_name} {customer.last_name}
+              </ListGroupItem>
+              : <ListGroupItem>This order has no customers</ListGroupItem>
+          }
+        </ListGroup>
+      </Col>
+
+    )
+  }
 
   orderList = (orders) => {
     return (
@@ -57,9 +114,19 @@ class Orders extends Component {
                 <ListGroupItem tag="a" href={`orders/${order.id}`} key={order.url} action>
                   <Row>
                     <Col xs={4} className=" d-flex align-items-center text-center">{order.id}</Col>
-                    <Col xs={4} className=" d-flex align-items-center text-center">{order.customer}</Col>
+                    <Col xs={4} className=" d-flex align-items-center text-center">{order.customer.first_name} {order.customer.last_name}</Col>
                     <Col xs={4} className=" d-flex align-items-center text-center">{order.payment_type}</Col>
                   </Row>
+                  {
+                    this.state.productSwitch
+                      ? this.productList(order.products)
+                      : null
+                  }
+                  {
+                    this.state.customerSwitch
+                      ? this.customerList(order.customer)
+                      : null
+                  }
                 </ListGroupItem>
               )
             })
@@ -75,15 +142,6 @@ class Orders extends Component {
         <Container className="text-center">
           <h1>Orders</h1>
         </Container>
-        <Container className="text-center addButton">
-          {
-            (this.state.add === false)
-              ?
-              <Button color="primary" className="ml-2" onClick={()=>this.toggleAdd()}>Add Order</Button>
-              :
-              <Button color="danger" className="ml-2" onClick={()=>this.toggleAdd()}>Cancel</Button>
-          }
-        </Container>
         {
           (this.state.add === true)
             ? <OrderForm
@@ -92,6 +150,32 @@ class Orders extends Component {
             />
             : null
         }
+        <Row>
+          <Col className="d-lg-flex">
+            <div className="mr-4">
+              <CustomInput onChange={this.handleChange} type="switch" id="completedSwitch" name="customSwitch" label="Completed Orders" className="mb-3" checked={this.state.completedSwitch} />
+            </div>
+            <div className="mr-4">
+              <CustomInput onChange={this.handleChange} type="switch" id="incompleteSwitch" name="customSwitch" label="Incomplete Orders" className="mb-3" checked={this.state.incompleteSwitch} />
+            </div>
+            <div className="mr-4">
+              <CustomInput onChange={this.handleChange} type="switch" id="productSwitch" name="customSwitch" label="Include Products" className="mb-3" checked={this.state.productSwitch} />
+            </div>
+            <div className="mr-4">
+              <CustomInput onChange={this.handleChange} type="switch" id="customerSwitch" name="customSwitch" label="Include Customers" className="mb-3" checked={this.state.customerSwitch} />
+            </div>
+            <div className="ml-auto">
+              {
+                (this.state.add === false)
+                  ?
+                  <Button color="primary" className="ml-2" onClick={()=>this.toggleAdd()}>Add Order</Button>
+                  :
+                  <Button color="danger" className="ml-2" onClick={()=>this.toggleAdd()}>Cancel</Button>
+              }
+            </div>
+          </Col>
+        </Row>
+
         {this.orderList(this.state.orders)}
       </>
     )
@@ -99,8 +183,3 @@ class Orders extends Component {
 }
 
 export default Orders
-
-// A user has an affordance to view all orders (order id, cust name, payment type)
-// A user has an affordance to filter out completed or incomplete orders (endpoints ?completed=false or ?completed=true)
-// A user has an affordance to embed products in an order in the order list view ( endpoint ?_include=products)
-// A User has an affordance to embed the associate customer in the order list view(endpoint ?_include=customers)
