@@ -110,7 +110,7 @@ class EmployeeForm extends Component {
                   APICalls.post("employeecomputers", compEmployeeJoin)
                     .then(() => this.props.refresh())
                 }
-
+                this.props.refresh()
               }
               else {
                 (this.props.employee.current_computer.computer.id === this.state.employeeComputer)

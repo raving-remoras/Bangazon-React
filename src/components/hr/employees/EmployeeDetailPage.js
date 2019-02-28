@@ -17,24 +17,27 @@ class EmployeeDetailPage extends Component {
     this.refresh()
   }
 
-  formToggle= ()=>{
-    this.setState({edit: !this.state.edit})
+  formToggle = () => {
+    this.setState({ edit: !this.state.edit })
   }
 
-  employeeFormHolder(){
-    if(this.state.edit === false){
-      return <Button onClick={()=>this.formToggle()}>+</Button>
-    }else if(this.state.edit === true){
-      return <EmployeeForm employee={this.state.employee} formToggle={this.formToggle} refresh={this.refresh}/>
+  employeeFormHolder() {
+    if (this.state.edit === false) {
+      return <Button onClick={() => this.formToggle()}>+</Button>
+    } else if (this.state.edit === true) {
+      return <EmployeeForm employee={this.state.employee} formToggle={this.formToggle} refresh={this.refresh} />
     }
   }
 
   refresh = () => {
     APICalls.getOneFromCategory("employees", this.props.match.params.employeeId)
-      .then(employee => this.setState({
-        employee: employee,
-        edit: false
-      }))
+      .then(employee => {
+        console.log("I'm refreshing")
+        this.setState({
+          employee: employee,
+          edit: false
+        })
+      })
 
   }
 
@@ -60,14 +63,14 @@ class EmployeeDetailPage extends Component {
             ? <>
               <dt className="col-sm-3">Supervisor</dt>
               <dd className="col-sm-9">Yes</dd>
-              </>
+            </>
             : null
           }
           {(this.state.employee.department)
             ? <>
               <dt className="col-sm-3">Department Name</dt>
               <dd className="col-sm-9">{this.state.employee.department.name}</dd>
-              </>
+            </>
             : null}
 
 
@@ -75,7 +78,7 @@ class EmployeeDetailPage extends Component {
             ? <>
               <dt className="col-sm-3">Current Computer</dt>
               <dd className="col-sm-9">{this.state.employee.current_computer.computer.make} {this.state.employee.current_computer.computer.model} {this.state.employee.current_computer.computer.serial_no}</dd>
-              </>
+            </>
             : null}
         </dl>
       </Container>
