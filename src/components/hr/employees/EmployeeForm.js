@@ -46,8 +46,13 @@ class EmployeeForm extends Component {
 
   }
 
+  // getComputers() {
+  //   APICalls.getAllFromCategory("computers")
+  //     .then(computers => this.setState({ computers }))
+  // }
+
   getComputers() {
-    APICalls.getAllFromCategory("computers")
+    APICalls.getAllFromCategoryWithQuery("computers", "_filter", "unassigned")
       .then(computers => this.setState({ computers }))
   }
 
