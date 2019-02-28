@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { Button, Form, FormGroup, Label, Input} from "reactstrap"
+import { Button, Form, FormGroup, Label, Input } from "reactstrap"
 import APICalls from "../../../modules/APICalls"
 
 
@@ -15,12 +15,13 @@ class EmployeeForm extends Component {
     employeeDepartment: null,
     computers: [],
     departments: [],
-    departmentOption:"",
+    departmentOption: "",
     option: "",
     loaded: false
   }
 
   componentDidMount() {
+
     if (this.props.employee) {
       let stateObj = {
         employeeFirstName: this.props.employee.first_name,
@@ -31,15 +32,14 @@ class EmployeeForm extends Component {
         employeeDepartment: this.props.employee.department.id,
         loaded: true
       }
-      if(this.props.employee.current_computer){
+      if (this.props.employee.current_computer) {
         stateObj.employeeComputer = this.props.employee.current_computer.computer.id
+
       }
       this.setState(stateObj)
     }
 
     this.getComputers()
-
-
     this.defaultComputer()
     this.defaultDepartment()
     this.getDepartments()
@@ -51,9 +51,9 @@ class EmployeeForm extends Component {
       .then(computers => this.setState({ computers }))
   }
 
-  getDepartments(){
+  getDepartments() {
     APICalls.getAllFromCategory("departments")
-      .then(departments => this.setState({departments}))
+      .then(departments => this.setState({ departments }))
   }
 
   // TODO:Form validation
@@ -81,19 +81,34 @@ class EmployeeForm extends Component {
         ? APICalls.update("employees", employeeObj, this.props.employee.id)
           .then((employee) => {
             // if a new computer is assinged, this will add the new relationship and remove the old relationship
-            (this.props.employee.computer.id === this.state.employeeComputer)
-              ? this.props.refresh()
-              : APICalls.post("employeecomputers", compEmployeeJoin)
-                .then(() => {
-                  let computerUnAssign = {
-                    computer: this.props.employee.current_computer.computer.id,
-                    employee: employee.id,
-                    date_assigned: this.props.employee.current_computer.computer.date_assigned,
-                    date_revoked: new Date().toISOString()
-                  }
-                  APICalls.update("computers", computerUnAssign, computerUnAssign.computer)
-                    .then(()=> this.props.refresh())
-                })
+            if (this.props.employee.current_computer === null) {
+              if (this.state.employeeComputer !== null) {
+                compEmployeeJoin.employee = this.props.employee.id
+                APICalls.post("employeecomputers", compEmployeeJoin)
+                  .then(() => this.props.refresh())
+              }
+
+            }
+            else {
+              (this.props.employee.current_computer.computer.id === this.state.employeeComputer)
+                ? this.props.refresh()
+                : APICalls.post("employeecomputers", compEmployeeJoin)
+                  .then(() => {
+                    let computerUnAssign = {
+                      computer: this.props.employee.current_computer.computer.id,
+                      make: this.props.employee.current_computer.computer.make,
+                      model: this.props.employee.current_computer.computer.model,
+                      serial_no: this.props.employee.current_computer.computer.serial_no,
+                      purchase_date: this.props.employee.current_computer.computer.purchase_date,
+                      employee: employee.id,
+                      date_assigned: this.props.employee.current_computer.computer.date_assigned,
+                      date_revoked: new Date().toISOString()
+                    }
+                    console.log("computer", computerUnAssign)
+                    APICalls.update("computers", computerUnAssign, computerUnAssign.computer)
+                      .then(() => this.props.refresh())
+                  })
+            }
           })
 
         // if new
@@ -115,10 +130,15 @@ class EmployeeForm extends Component {
 
   defaultComputer() {
     let option
-    if (this.props.employee.current_computer === null) {
+    if (!this.props.employee) {
+      {
+        option = <option value={null}>Assign a Computer</option>
+      }
+    }
+    else if (this.props.employee.current_computer === null) {
       option = <option value={null}>Assign a Computer</option>
     }
-    else {
+    else if (this.props.employee.current_computer) {
       option = <option value={this.props.employee.current_computer.computer.id}>{this.props.employee.current_computer.computer.model}, {this.props.employee.current_computer.computer.serial_no}</option>
     }
     this.setState({ option })
@@ -126,7 +146,11 @@ class EmployeeForm extends Component {
 
   defaultDepartment() {
     let departmentOption
-    if (this.props.employee.department === null) {
+    if (!this.props.employee) {
+      departmentOption = <option value={null}>Assign a Department</option>
+
+    }
+    else if (this.props.employee.department === null) {
       departmentOption = <option value={null}>Assign a Department</option>
     }
     else {
@@ -161,7 +185,7 @@ class EmployeeForm extends Component {
         </FormGroup>
         <FormGroup>
           <Label>Department</Label>
-          <Input required type="select" id="employeeDepartment" onChange={(e)=>this.handleFieldChange(e)}>
+          <Input required type="select" id="employeeDepartment" onChange={(e) => this.handleFieldChange(e)}>
             {this.state.departmentOption}
             {this.state.departments.map(department => {
               return <option key={department.id} value={department.id}>{department.name}</option>
