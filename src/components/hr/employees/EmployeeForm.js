@@ -22,6 +22,7 @@ class EmployeeForm extends Component {
     departments: [],
     departmentOption: "",
     option: "",
+    superOption: "",
     loaded: false
   }
 
@@ -47,6 +48,7 @@ class EmployeeForm extends Component {
     this.getComputers()
     this.defaultComputer()
     this.defaultDepartment()
+    this.defaultSuper()
     this.getDepartments()
 
   }
@@ -97,7 +99,7 @@ class EmployeeForm extends Component {
                 date_revoked: new Date().toISOString()
               }
               APICalls.update("employeecomputers", computerUnAssign, this.props.employee.current_computer.employeecomputer_id)
-                .then(( ) => {
+                .then(() => {
                   this.props.refresh()
                 })
             } else {
@@ -112,7 +114,7 @@ class EmployeeForm extends Component {
               }
               else {
                 (this.props.employee.current_computer.computer.id === this.state.employeeComputer)
-                // if their computer assignment changed, their old computer will be removed and revoked and the new computer assigned
+                  // if their computer assignment changed, their old computer will be removed and revoked and the new computer assigned
                   ? this.props.refresh()
                   : APICalls.post("employeecomputers", compEmployeeJoin)
                     .then(() => {
@@ -188,6 +190,27 @@ class EmployeeForm extends Component {
     this.setState({ departmentOption })
   }
 
+  defaultSuper() {
+    let superOption
+    if (!this.props.employee) {
+      superOption = <>
+        <option value={false}>No</option>
+        <option value={true}>Yes</option>
+      </>
+    } else if (this.props.employee.is_supervisor){
+      superOption = <>
+        <option value={true}>Yes</option>
+        <option value={false}>No</option>
+      </>
+    } else {
+      superOption = <>
+        <option value={false}>No</option>
+        <option value={true}>Yes</option>
+      </>
+    }
+    this.setState({superOption})
+  }
+
   render() {
 
     return (
@@ -224,8 +247,7 @@ class EmployeeForm extends Component {
         <FormGroup>
           <Label>Supervisor</Label>
           <Input type="select" id="employeeSupervisor" onChange={e => this.handleFieldChange(e)}>
-            <option value={false}>No</option>
-            <option value={true}>Yes</option>
+            {this.state.superOption}
           </Input>
         </FormGroup>
         <FormGroup>
