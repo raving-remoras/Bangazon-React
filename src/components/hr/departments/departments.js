@@ -44,7 +44,7 @@ class Departments extends Component {
     //function fetches departments with employees embedded where department budget is greater than what the employee entered
     APICalls.getAllFromCategoryWithQuery("departments", "_filter", `budget&_gt=${this.state.budget}&_include=employees`)
       .then((departments) => {
-        this.setState({departments: departments})
+        this.setState({departments: departments, budget: ""})
       })
   }
 
@@ -68,7 +68,7 @@ class Departments extends Component {
           >
             <FormGroup>
               <Label for="budget">Departments with Budgets Greater Than:</Label>
-              <Input type="number" name="budget" id="budget" required onChange={(e) => this.handleFieldChange(e)} />
+              <Input type="number" name="budget" id="budget" required value={this.state.budget} onChange={(e) => this.handleFieldChange(e)} />
             </FormGroup>
             <Button color="primary" type="submit">Search</Button>
             <Button color="info"
