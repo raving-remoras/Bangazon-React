@@ -1,6 +1,6 @@
 /**
  * Purpose: Handles the view for all Employees from /api/v1/employees
- * Author: Sebastian Civarolo
+ * Author: Sebastian Civarolo and Jase Hackman
  */
 
 import React, { Component } from "react"
@@ -52,6 +52,11 @@ class Employees extends Component {
             <Row>
               <Col><h6>First Name</h6></Col>
               <Col><h6>Last Name</h6></Col>
+              <Col><h6>Start Date</h6></Col>
+              <Col><h6>End Date</h6></Col>
+              <Col><h6>Supervisor</h6></Col>
+              <Col><h6>Department</h6></Col>
+              <Col><h6>Current Computer</h6></Col>
             </Row>
           </ListGroupItem>
           {this.state.employees.map((employee, i) => {

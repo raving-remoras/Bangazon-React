@@ -1,3 +1,8 @@
+/**
+ * Purpose: Handles the form for creating and editing an employee
+ * Author: Jase Hackman
+ */
+
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { Button, Form, FormGroup, Label, Input } from "reactstrap"
@@ -46,11 +51,6 @@ class EmployeeForm extends Component {
 
   }
 
-  // getComputers() {
-  //   APICalls.getAllFromCategory("computers")
-  //     .then(computers => this.setState({ computers }))
-  // }
-
   getComputers() {
     APICalls.getAllFromCategoryWithQuery("computers", "_filter", "available")
       .then(computers => this.setState({ computers }))
@@ -61,7 +61,6 @@ class EmployeeForm extends Component {
       .then(departments => this.setState({ departments }))
   }
 
-  // TODO:Form validation
   post() {
     let employeeObj = {
       first_name: this.state.employeeFirstName,
@@ -71,7 +70,6 @@ class EmployeeForm extends Component {
       is_supervisor: this.state.employeeSupervisor,
       department: this.state.employeeDepartment
     }
-    console.log(employeeObj)
 
     let compEmployeeJoin = {
       computer: this.state.employeeComputer,
@@ -79,19 +77,15 @@ class EmployeeForm extends Component {
       date_revoked: null
     }
 
-
     {
       (this.props.employee)
         // if edit
         ? APICalls.update("employees", employeeObj, this.props.employee.id)
           .then((employee) => {
-            console.log("employee", employee)
             compEmployeeJoin.employee = employee.id
-            console.log("join", compEmployeeJoin)
-            // if a new computer is assinged, this will add the new relationship and remove the old relationship
+
             if (this.state.employeeComputer === "remove") {
-              console.log("REMVOE")
-              console.log("why", this.props.employee.current_computer)
+              // If remove a computer was selected this will updated their current computer with a revoke date
               let computerUnAssign = {
                 computer: this.props.employee.current_computer.computer.id,
                 make: this.props.employee.current_computer.computer.make,
@@ -102,15 +96,14 @@ class EmployeeForm extends Component {
                 date_assigned: this.props.employee.current_computer.date_assigned,
                 date_revoked: new Date().toISOString()
               }
-              console.log("computer", computerUnAssign)
               APICalls.update("employeecomputers", computerUnAssign, this.props.employee.current_computer.employeecomputer_id)
-                .then((data ) => {
-                  console.log("did it work", data)
+                .then(( ) => {
                   this.props.refresh()
                 })
             } else {
               if (this.props.employee.current_computer === null) {
                 if (this.state.employeeComputer !== null) {
+                  // If they didn't have a computer and now have been assigned one.
                   compEmployeeJoin.employee = this.props.employee.id
                   APICalls.post("employeecomputers", compEmployeeJoin)
                     .then(() => this.props.refresh())
@@ -119,6 +112,7 @@ class EmployeeForm extends Component {
               }
               else {
                 (this.props.employee.current_computer.computer.id === this.state.employeeComputer)
+                // if their computer assignment changed, their old computer will be removed and revoked and the new computer assigned
                   ? this.props.refresh()
                   : APICalls.post("employeecomputers", compEmployeeJoin)
                     .then(() => {
@@ -132,7 +126,6 @@ class EmployeeForm extends Component {
                         date_assigned: this.props.employee.current_computer.date_assigned,
                         date_revoked: new Date().toISOString()
                       }
-                      console.log("computer", computerUnAssign)
                       APICalls.update("employeecomputers", computerUnAssign, this.props.employee.current_computer.employeecomputer_id)
                         .then(() => this.props.refresh())
                     })
@@ -140,11 +133,10 @@ class EmployeeForm extends Component {
             }
           })
 
-        // if new
+        // if new employee and computer
         : APICalls.post("employees", employeeObj)
           .then((employee) => {
             compEmployeeJoin.employee = employee.id
-            console.log("join", compEmployeeJoin)
             APICalls.post("employeecomputers", compEmployeeJoin)
             this.props.refresh()
           })
@@ -158,6 +150,7 @@ class EmployeeForm extends Component {
   }
 
   defaultComputer() {
+    // sets the select dropdown with their current computer or a default option
     let option
     if (!this.props.employee) {
       {
@@ -178,6 +171,8 @@ class EmployeeForm extends Component {
   }
 
   defaultDepartment() {
+    // sets the select dropdown with their current department or a default option
+
     let departmentOption
     if (!this.props.employee) {
       departmentOption = <option value={null}>Assign a Department</option>

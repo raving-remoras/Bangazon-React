@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Container } from "reactstrap"
 import APICalls from "../../../modules/APICalls"
-import { ListGroup, ListGroupItem, Row, Col, Button } from "reactstrap"
+import {Button } from "reactstrap"
 import EmployeeForm from "./EmployeeForm"
 import PropTypes from "prop-types"
 
@@ -32,7 +32,6 @@ class EmployeeDetailPage extends Component {
   refresh = () => {
     APICalls.getOneFromCategory("employees", this.props.match.params.employeeId)
       .then(employee => {
-        console.log("I'm refreshing")
         this.setState({
           employee: employee,
           edit: false
