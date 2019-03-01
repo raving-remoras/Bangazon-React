@@ -237,8 +237,8 @@ class EmployeeForm extends Component {
             })}
           </Input>
         </FormGroup>
-        <Button onClick={() => this.props.formToggle()}>Back</Button>
-        <Button type="submit">Save</Button>
+        <Button className="m-1" onClick={() => this.props.formToggle()}>Back</Button>
+        <Button className="m-1" color="primary" type="submit">Save</Button>
 
       </Form>
     )

@@ -27,7 +27,7 @@ class Employees extends Component {
 
   employeeFormHolder(){
     if(this.state.addNew === false){
-      return <Button onClick={()=>this.formToggle()}>+</Button>
+      return <Container className="text-center addButton"><Button color="primary" onClick={()=>this.formToggle()}>Add Employee</Button></Container>
     }else if(this.state.addNew === true){
       return <EmployeeForm formToggle={this.formToggle} refresh={this.refresh}/>
     }

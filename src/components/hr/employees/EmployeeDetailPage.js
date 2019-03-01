@@ -23,7 +23,7 @@ class EmployeeDetailPage extends Component {
 
   employeeFormHolder() {
     if (this.state.edit === false) {
-      return <Button onClick={() => this.formToggle()}>+</Button>
+      return <Container className=" addButton"><Button color="primary" onClick={() => this.formToggle()}>Edit</Button></Container>
     } else if (this.state.edit === true) {
       return <EmployeeForm employee={this.state.employee} formToggle={this.formToggle} refresh={this.refresh} />
     }
@@ -47,7 +47,6 @@ class EmployeeDetailPage extends Component {
     return (
       <Container>
         <h1>Employees</h1>
-        {this.employeeFormHolder()}
         <dl className="row">
           <dt className="col-sm-3">Employee Name</dt>
           <dd className="col-sm-9">{this.state.employee.first_name} {this.state.employee.last_name}</dd>
@@ -80,6 +79,8 @@ class EmployeeDetailPage extends Component {
             </>
             : null}
         </dl>
+        {this.employeeFormHolder()}
+
       </Container>
     )
   }
