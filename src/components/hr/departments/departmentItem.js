@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { ListGroupItem, Row, Col } from "reactstrap"
+import { ListGroupItem, Row, Col, ListGroup } from "reactstrap"
 import PropTypes from "prop-types"
 
 
@@ -22,6 +22,29 @@ class DepartmentItem extends Component {
 
           </Col>
         </Row>
+        <Row>
+          {
+            (this.props.showEmployees === true)
+              ? <Col className="mt-3">
+                <h6 className="text-black-50">Employees</h6>
+                <ListGroup className="mt-2 mb-1">
+                  {
+                    (this.props.department.employees.length)
+                      ? this.props.department.employees.map(employee =>
+
+                        <ListGroupItem key={employee.id}>
+                          {employee.first_name} {employee.last_name}
+                        </ListGroupItem>
+
+                      )
+                      :
+                      <ListGroupItem>Department has no employees.</ListGroupItem>
+                  }
+                </ListGroup>
+              </Col>
+              : null
+          }
+        </Row>
       </ListGroupItem>
     )
   }
@@ -31,5 +54,6 @@ class DepartmentItem extends Component {
 export default DepartmentItem
 
 DepartmentItem.propTypes = {
-  department: PropTypes.object.isRequired
+  department: PropTypes.object.isRequired,
+  showEmployees: PropTypes.bool.isRequired
 }
