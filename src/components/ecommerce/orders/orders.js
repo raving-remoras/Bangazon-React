@@ -80,7 +80,6 @@ class Orders extends Component {
           }
         </ListGroup>
       </Col>
-
     )
   }
 
@@ -98,7 +97,6 @@ class Orders extends Component {
           }
         </ListGroup>
       </Col>
-
     )
   }
 
@@ -125,7 +123,6 @@ class Orders extends Component {
         {
           orders
             ? orders.map(order => {
-              // let payment_type = this.state.payment_types.find(pt => pt.url === order.payment_type)
               return(
                 <ListGroupItem tag="a" href={`orders/${order.id}`} key={order.url} action>
                   <Row>
@@ -136,7 +133,6 @@ class Orders extends Component {
                         ? this.paymentType(order.payment_type)
                         : null
                     }
-                    {/* <Col xs={4} className=" d-flex align-items-center text-center">{payment_type.name}</Col> */}
                   </Row>
                   {
                     this.state.productSwitch

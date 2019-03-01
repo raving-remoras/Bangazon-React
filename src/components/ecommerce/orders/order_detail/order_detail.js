@@ -9,6 +9,7 @@ import {
   ListGroupItem
 } from "reactstrap"
 import OrderForm from "../order_form/order_form"
+import PropTypes from "prop-types"
 
 class OrderDetail extends Component {
   state = {
@@ -40,17 +41,6 @@ class OrderDetail extends Component {
             .then(customer => this.setState({ customer, isLoaded: true }))
         }
       })
-
-    // .then(order => {
-    //   this.setState({ order})
-    //   customer_url = order.customer
-    //   return APICalls.getOneFromCategoryURL(order.payment_type)
-    // })
-    // .then(payment_type => {
-    //   this.setState({ payment_type })
-    //   return APICalls.getOneFromCategoryURL(customer_url)
-    // })
-    // .then(customer => this.setState({ customer, isLoaded: true  }))
   }
 
   toggleEdit = () => {
@@ -156,3 +146,7 @@ class OrderDetail extends Component {
 }
 
 export default OrderDetail
+
+OrderDetail.propTypes = {
+  match: PropTypes.object
+}

@@ -1,5 +1,12 @@
 import React, { Component } from "react"
-import {Container, Form, FormGroup, Label, Input, Button} from "reactstrap"
+import {
+  Container,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button
+} from "reactstrap"
 import APICalls from "../../../../modules/APICalls"
 import PropTypes from "prop-types"
 
