@@ -78,7 +78,7 @@ class OrderForm extends Component {
 
     let obj = {}
     if(this.state.payment_type){
-      const payment_type = this.state.payment_types.find(pt => pt.name === this.state.payment_type)
+      const payment_type = this.state.payment_types.find(pt => pt.name === this.state.payment_type.name)
 
       obj = {
         customer: customer.url,
@@ -87,7 +87,9 @@ class OrderForm extends Component {
       }
     } else{
       obj = {
-        customer: customer.url
+        customer: customer.url,
+        payment_type: null,
+        payment_date: null
       }
     }
     return APICalls.update("orders", obj, this.props.order.id)
