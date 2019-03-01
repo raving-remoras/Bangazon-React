@@ -118,7 +118,7 @@ class CustomerDetail extends Component {
                   <ListGroup>
                     {
                       customer.product.map((product, i) => {
-                        return <ListGroupItem key={i}>{product.title}</ListGroupItem>
+                        return <ListGroupItem key={i} tag="a" href={`/ecommerce/products/${product.id}`} action>{product.title}</ListGroupItem>
                       })
                     }
                   </ListGroup>
@@ -128,7 +128,7 @@ class CustomerDetail extends Component {
           }
         </Col>
         <Col lg={6} className="mb-4">
-          <h3>Payment Types</h3>
+          <h3>Used Payment Types</h3>
           <CustomInput onChange={this.onChangeToggle} type="switch" id="paymentsSwitch" name="customSwitch" label="Include Payment Types" className="mb-3" />
           {
             this.state.paymentsSwitch
@@ -137,7 +137,7 @@ class CustomerDetail extends Component {
                   <ListGroup>
                     {
                       customer.used_paymenttypes.map((payment, i) => {
-                        return <ListGroupItem key={i}>{payment.name}</ListGroupItem>
+                        return <ListGroupItem key={i} tag="a" action href={`/ecommerce/paymenttypes/${payment.id}`}>{payment.name}</ListGroupItem>
                       })
                     }
                   </ListGroup>
