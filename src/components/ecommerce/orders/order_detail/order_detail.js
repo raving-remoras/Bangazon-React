@@ -92,6 +92,17 @@ class OrderDetail extends Component {
                 </Row>
             }
             {
+              (order.payment_date !== null)
+                ?<Row>
+                  <Col>Payment Date:</Col>
+                  <Col>{order.payment_date}</Col>
+                </Row>
+                :<Row>
+                  <Col>Payment Date:</Col>
+                  <Col>No Payment Date for this Order</Col>
+                </Row>
+            }
+            {
               customer
                 ?<Row>
                   <Col>Customer Name:</Col>

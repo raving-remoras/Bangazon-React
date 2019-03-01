@@ -23,7 +23,7 @@ class OrderForm extends Component {
       this.setState({
         customer: this.props.customer,
         payment_type: this.props.payment_type,
-        payment_date : this.props.payment_date
+        payment_date : this.props.order.payment_date
       })
       this.refreshData()
     }
