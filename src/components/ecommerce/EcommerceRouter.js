@@ -20,6 +20,9 @@ import ProductDetail from "./products/product_detail/product_detail"
 import ProductTypeDetail from "./product_types/product_type_detail/product_type_detail"
 import Orders from "./orders/orders"
 import OrderDetail from "./orders/order_detail/order_detail"
+import PaymentTypes from "./payment_types/paymentTypes"
+import PaymentTypeDetail from "./payment_types/paymentTypeDetail"
+import NewPaymentType from "./payment_types/newPaymentType"
 
 class EcommerceRouter extends Component {
   state = {  }
@@ -41,6 +44,9 @@ class EcommerceRouter extends Component {
             <NavItem>
               <NavLink tag={RouterNavLink} to="/ecommerce/orders">Orders</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink tag={RouterNavLink} to="/ecommerce/paymenttypes">Payment Types</NavLink>
+            </NavItem>
           </Nav>
         </Navbar>
 
@@ -55,6 +61,9 @@ class EcommerceRouter extends Component {
           <Route exact path="/ecommerce/producttypes/:productTypeId(\d+)" render={(props)=> <ProductTypeDetail {...props}/>}/>
           <Route exact path="/ecommerce/orders" render={(props) => <Orders {...props}/>}/>
           <Route exact path="/ecommerce/orders/:orderId(\d+)" render={(props)=> <OrderDetail {...props}/>}/>
+          <Route exact path="/ecommerce/paymenttypes" render={props => <PaymentTypes {...props} />} />
+          <Route exact path="/ecommerce/paymenttypes/:paymentTypeId(\d+)" render={props => <PaymentTypeDetail {...props} />} />
+          <Route exact path="/ecommerce/paymenttypes/new" render={props => <NewPaymentType {...props} />} />
         </Switch>
       </>
     )
