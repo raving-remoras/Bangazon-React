@@ -78,12 +78,22 @@ class OrderForm extends Component {
 
     let obj = {}
     if(this.state.payment_type){
-      const payment_type = this.state.payment_types.find(pt => pt.name === this.state.payment_type.name)
+      if(typeof this.state.payment_type === "string"){
+        const payment_type = this.state.payment_types.find(pt => pt.name === this.state.payment_type)
 
-      obj = {
-        customer: customer.url,
-        payment_type: payment_type.url,
-        payment_date: this.state.payment_date
+        obj = {
+          customer: customer.url,
+          payment_type: payment_type.url,
+          payment_date: this.state.payment_date
+        }
+      } else{
+        const payment_type = this.state.payment_types.find(pt => pt.name === this.state.payment_type.name)
+
+        obj = {
+          customer: customer.url,
+          payment_type: payment_type.url,
+          payment_date: this.state.payment_date
+        }
       }
     } else{
       obj = {
