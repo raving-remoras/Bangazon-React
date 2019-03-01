@@ -14,6 +14,7 @@ import OrderForm from "./order_form/order_form"
 class Orders extends Component {
   state = {
     add: false,
+    isLoaded: false,
     completedSwitch: false,
     incompleteSwitch: false,
     productSwitch: false,
@@ -26,7 +27,11 @@ class Orders extends Component {
 
   refreshData = () => {
     APICalls.getAllFromCategoryWithQuery("orders", ["_include"], ["products,customers"])
-      .then(orders => this.setState({ orders }))
+      .then(orders => {
+        this.setState({ orders })
+        return APICalls.getAllFromCategory("paymenttypes")
+      })
+      .then(payment_types => this.setState({ payment_types, isLoaded: true }))
   }
 
   handleChange = (evt) => {
@@ -97,6 +102,16 @@ class Orders extends Component {
     )
   }
 
+  paymentType = (order_payment_type) => {
+    return this.state.payment_types.map(payment_type => {
+      if (payment_type.url === order_payment_type){
+        return(
+          <Col xs={4} className=" d-flex align-items-center text-center">{payment_type.name}</Col>
+        )
+      }
+    })
+  }
+
   orderList = (orders) => {
     return (
       <ListGroup className="listItems">
@@ -110,12 +125,18 @@ class Orders extends Component {
         {
           orders
             ? orders.map(order => {
+              // let payment_type = this.state.payment_types.find(pt => pt.url === order.payment_type)
               return(
                 <ListGroupItem tag="a" href={`orders/${order.id}`} key={order.url} action>
                   <Row>
                     <Col xs={4} className=" d-flex align-items-center text-center">{order.id}</Col>
                     <Col xs={4} className=" d-flex align-items-center text-center">{order.customer.first_name} {order.customer.last_name}</Col>
-                    <Col xs={4} className=" d-flex align-items-center text-center">{order.payment_type}</Col>
+                    {
+                      (order.payment_type !== null)
+                        ? this.paymentType(order.payment_type)
+                        : null
+                    }
+                    {/* <Col xs={4} className=" d-flex align-items-center text-center">{payment_type.name}</Col> */}
                   </Row>
                   {
                     this.state.productSwitch
@@ -175,8 +196,11 @@ class Orders extends Component {
             </div>
           </Col>
         </Row>
-
-        {this.orderList(this.state.orders)}
+        {
+          (this.state.isLoaded === true)
+            ? this.orderList(this.state.orders)
+            : null
+        }
       </>
     )
   }
