@@ -57,6 +57,27 @@ class OrderDetail extends Component {
     this.setState({ edit: !this.state.edit })
   }
 
+  productList = (products) => {
+    return (
+      <Col className="mt-3">
+        <h6 className="text-black-50">Products</h6>
+        <ListGroup className="mt-2 mb-1">
+          {
+            (products.length)
+              ? products.map(product => {
+                return(
+                  <ListGroupItem key={product.product.url}>
+                    {product.product.title}
+                  </ListGroupItem>
+                )
+              })
+              : <ListGroupItem>This order has no products</ListGroupItem>
+          }
+        </ListGroup>
+      </Col>
+    )
+  }
+
   orderDetail =(order, payment_type, customer)=>{
     return(
       order
@@ -88,6 +109,7 @@ class OrderDetail extends Component {
                 </Row>
                 : null
             }
+            {this.productList(order.products)}
           </ListGroupItem>
         </ListGroup>
         </>
