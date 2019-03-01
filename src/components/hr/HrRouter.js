@@ -12,6 +12,7 @@ import {
 } from "reactstrap"
 
 import Employees from "./employees/employees"
+import EmployeeDetailPage from "./employees/EmployeeDetailPage"
 import Computers from "./computers/computers"
 import ComputerDetail from "./computers/computerDetail"
 import Trainings from "./trainings/trainings"
@@ -20,7 +21,7 @@ import Departments from "./departments/departments"
 import DepartmentDetail from "./departments/departmentDetail"
 
 class HrRouter extends Component {
-  state = {  }
+  state = {}
   render() {
     return (
       <>
@@ -43,7 +44,11 @@ class HrRouter extends Component {
 
         {/* Sub Router for all HR paths */}
         <Switch>
-          <Route path="/hr/employees" render={(props) => <Employees {...props} />} />
+          <Route exact path="/hr/employees" render={(props) => <Employees {...props} />} />
+          <Route path="/hr/employees/:employeeId(\d+)" render={(props => {
+            return <EmployeeDetailPage {...props}  />
+
+          })} />
           <Route exact path="/hr/computers" render={(props) => <Computers {...props} />} />
           <Route path="/hr/computers/:compId(\d+)" render={(props) => <ComputerDetail {...props}/>}
           />
