@@ -24,3 +24,8 @@
   margin: 0 auto;
   margin-bottom: 50px;
 }
+
+.filterGroup {
+  width: 30%;
+  margin-top: 50px;
+}

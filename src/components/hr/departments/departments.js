@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Button, ListGroup, ListGroupItem, Row, Col, Container} from "reactstrap"
+import { Button, ListGroup, ListGroupItem, Row, Col, Container, CustomInput, Form, FormGroup, Label, Input} from "reactstrap"
 import APICalls from "../../../modules/APICalls"
 import DepartmentItem from "./departmentItem"
 import DepartmentForm from "./departmentForm"
@@ -12,11 +12,12 @@ class Departments extends Component {
   */
   state = {
     add: false,
+    employeeSwitch: false
   }
 
   getDepartments = () => {
-    //Method fetches all departments, then sets state
-    APICalls.getAllFromCategory("departments")
+    //Method fetches all departments with employees embedded, then sets state
+    APICalls.getAllFromCategoryWithQuery("departments", "_include", "employees")
       .then((departments) => {
         this.setState({departments: departments})
       })
@@ -25,6 +26,26 @@ class Departments extends Component {
   toggleAdd = () => {
     //Method sets state according to whether add form should be visible
     this.setState({add: !this.state.add})
+  }
+
+  toggleEmployee = () => {
+    //Method sets state according to whether add form should be visible
+    this.setState({employeeSwitch: !this.state.employeeSwitch})
+  }
+
+  handleFieldChange = e => {
+    //function uses ids of form fields as keys, creates an object with input as value, and sets state
+    const stateToChange = {}
+    stateToChange[e.target.id] = e.target.value
+    this.setState(stateToChange)
+  }
+
+  searchByBudget = () => {
+    //function fetches departments with employees embedded where department budget is greater than what the employee entered
+    APICalls.getAllFromCategoryWithQuery("departments", "_filter", `budget&_gt=${this.state.budget}&_include=employees`)
+      .then((departments) => {
+        this.setState({departments: departments, budget: ""})
+      })
   }
 
   componentDidMount() {
@@ -36,6 +57,24 @@ class Departments extends Component {
       <>
         <Container className="text-center">
           <h1 id="deptHead">Departments</h1>
+        </Container>
+        <Container className="filterGroup">
+          <CustomInput onChange={this.toggleEmployee} type="switch" id="employeeSwitch" name="customSwitch" label="Include Employees" className="mb-3" checked={this.state.employeeSwitch} />
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault()
+              this.searchByBudget()
+            }}
+          >
+            <FormGroup>
+              <Label for="budget">Departments with Budgets Greater Than:</Label>
+              <Input type="number" name="budget" id="budget" required value={this.state.budget} onChange={(e) => this.handleFieldChange(e)} />
+            </FormGroup>
+            <Button color="primary" type="submit">Search</Button>
+            <Button color="info"
+              onClick={()=> this.getDepartments()}
+            >Reset</Button>
+          </Form>
         </Container>
         <Container className="text-center addButton">
           {
@@ -72,6 +111,7 @@ class Departments extends Component {
             {
               this.state.departments.map(department =>
                 <DepartmentItem key={department.id}
+                  showEmployees={this.state.employeeSwitch}
                   department={department}
                   {...this.props}
 
