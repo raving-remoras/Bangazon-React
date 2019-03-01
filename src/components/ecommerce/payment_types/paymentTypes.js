@@ -1,3 +1,8 @@
+/**
+ * Displays a list of payment types
+ * Author: Sebastian Civarolo
+ */
+
 import React, { Component } from "react"
 import APICalls from "../../../modules/APICalls"
 import {

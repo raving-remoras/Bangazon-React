@@ -1,3 +1,8 @@
+/**
+ * Handles displaying the New Payment Type Form
+ * Author: Sebastian Civarolo
+ */
+
 import React, { Component } from "react"
 import {
   Row,

@@ -1,3 +1,8 @@
+/**
+ * Displays the form for editing or creating a new payment type
+ * Author: Sebastian Civarolo
+ */
+
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import {

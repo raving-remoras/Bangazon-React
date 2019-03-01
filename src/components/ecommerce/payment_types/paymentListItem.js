@@ -1,3 +1,8 @@
+/**
+ * Handles displaying a single payment type on the main payment types view
+ * Author: Sebastian Civarolo
+ */
+
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 
