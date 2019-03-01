@@ -56,7 +56,7 @@ class OrderDetail extends Component {
             (products.length)
               ? products.map(product => {
                 return(
-                  <ListGroupItem key={product.product.url}>
+                  <ListGroupItem tag="a" href={`../../ecommerce/products/${product.product.id}`} key={product.product.url} action>
                     {product.product.title}
                   </ListGroupItem>
                 )
